@@ -29,7 +29,7 @@ Basic DUB Package Manager Usage
 import
 ------
 
-The import statement makes all public functions and types from the given module available. The D standard library modules are contained within the ``std`` package and imported using ``import std.MODULE;`` 
+The ``import`` statement makes all public functions and types from the given module available. The D standard library modules are contained within the ``std`` package and imported using ``import std.MODULE;`` 
 
 .. code-block::d
 

@@ -10,7 +10,7 @@ The Linux shebang
 
     #!/usr/bin/env rdmd
 
-enables a `.d` file to be used as an executable "script" once `chmod +x script_name.d` is done.
+enables a **.d** file to be used as an executable "script" once ``chmod +x script_name.d`` is done.
 
 Basic DUB Package Manager Usage
 -------------------------------

@@ -1,7 +1,7 @@
 D Introduction
 ==============
 
-D Shebang for Scripts in D
+Scripts in D
 --------------------------
 
 On Linux if you add the shebang 

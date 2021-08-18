@@ -4,13 +4,13 @@ D Introduction
 Scripts in D
 --------------------------
 
-The Linux the shebang 
+This Linux shebang 
 
 .. code-block:: bash
 
     #!/usr/bin/env rdmd
 
-turns a `.d` file into an executable D script once `chmod +x script_name.d` is done.
+enable `.d` file to become an executable "script" once `chmod +x script_name.d` is done.
 
 Basic DUB Package Manager Usage
 -------------------------------

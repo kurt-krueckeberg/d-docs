@@ -10,7 +10,8 @@ Welcome to D Lanugage Notes's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   notes/d-intro.rst
+   notes/intro.rst
+   notes/types.rst
 
 
 Indices and tables

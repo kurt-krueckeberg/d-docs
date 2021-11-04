@@ -26,7 +26,7 @@ and ``dub test`` to build and run unit tests.
      - Creates a new project
    * - dub run
      - Builds and runs it
-   * - dub (run within project folder)
+   * - dub [run within project folder]
      - Running dub inside <project_name>fetches all dependencies, compiles the application and then runs it.
 
 Dub configurations can us two file formats--JSON or SDLang. The JSON config settings are described `here <https://dub.pm/getting_started>`_.

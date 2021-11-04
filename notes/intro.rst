@@ -14,15 +14,15 @@ DUB Package Manager Usage
 -------------------------
 
 DUB is the D language's official package manager, providing simple and configurable cross-platform builds. Execute ``dub build`` to build your project. ``dub run`` to build and runs it,
-and ``dub test`` to build and run unit tests. The last line below is the output of the default application.
+and ``dub test`` to build and run unit tests. 
 
 .. list-table:: Title
-   :widths: 25 125
+   :widths: 35 115
    :header-rows: 1
 
    * - dub command
      - Explanation
-   * - dub init <project_name>
+   * - dub init *project*
      - Creates a new project
    * - dub run
      - Builds and runs it

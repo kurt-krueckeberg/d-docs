@@ -29,7 +29,7 @@ and ``dub test`` to build and run unit tests.
    * - dub [run within project folder]
      - dub run inside *project folder* fetches all dependencies, compiles and runs executable.
 
-Dub configurations can us two file formats--JSON or SDLang. The JSON config settings are described `here <https://dub.pm/getting_started>`_.
+DUB configurations can be in one of two formats: **JSON** or **SDLang**. The DUB JSON config settings are described `here <https://dub.pm/getting_started>`_.
 
 import
 ------

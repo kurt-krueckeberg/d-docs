@@ -10,9 +10,11 @@ Welcome to D Lanugage Notes's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   notes/vscode-tools.rst
    notes/intro.rst
    notes/types.rst
-
+   notes/unicode.rst
+   notes/files.rst
 
 Indices and tables
 ==================

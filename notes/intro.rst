@@ -1,20 +1,20 @@
 D Introduction
 ==============
 
-Scripts in D
+Writing Linux Scripts in D
 --------------------------
 
-The Linux shebang for creating a **D** script is
+The Linux shebang for making a .d an executable script is
 
 .. code-block:: bash
 
     #!/usr/bin/env rdmd
 
-Basic DUB Package Manager Usage
--------------------------------
+DUB Package Manager Usage
+-------------------------
 
-DUB is the D language's official package manager, providing simple and configurable cross-platform builds. DUB can also generate VisualD and Mono-D package files for easy IDE support.
-You execute ``dub build`` to build your project, ``dub run`` to build and run it, or ``dub test`` to build and run unit tests. The last line below is the output of the default application.
+DUB is the D language's official package manager, providing simple and configurable cross-platform builds. Execute ``dub build`` to build your project. ``dub run`` to build and runs it,
+and ``dub test`` to build and run unit tests. The last line below is the output of the default application.
 
 .. list-table:: Title
    :widths: 25 125

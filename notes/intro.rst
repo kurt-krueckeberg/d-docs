@@ -43,7 +43,7 @@ The ``import`` statement makes all public functions and types from the given mod
 
 The import statement need not appear at the top of the file; it can appear within local scopes, and you can also selectively import symbols from a module
 
-.. code-block::d
+.. code-block:: d
 
     import std.studio : writeln, writefln;
 

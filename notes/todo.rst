@@ -1,14 +1,9 @@
-VS Code: Learning It
-====================
+Read and or view:
 
-* `code-d User Guide <https://github.com/Pure-D/code-d/blob/master/docs/index.md>`_
-* `wordspace-d README <https://github.com/Pure-D/workspace-d>`_
-* `dlang-debug README <https://github.com/Pure-D/dlang-debug>`_
+* `code-d documentation <https://github.com/Pure-D/code-d/blob/master/docs/debugging.md>`_
 
 Listen or read these VS Code tutorials:
 
-Videos for Learning VS Code
----------------------------
 
 Microsoft VS Code Team tutorials:
 

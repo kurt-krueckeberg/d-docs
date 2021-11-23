@@ -16,6 +16,7 @@ Welcome to D Lanugage Notes's documentation!
    notes/unicode.rst
    notes/exceptions.rst
    notes/files.rst
+   notes/todo.rst
 
 Indices and tables
 ==================

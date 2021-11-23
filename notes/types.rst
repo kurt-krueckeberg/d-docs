@@ -3,7 +3,7 @@ Using D Built-in Types
 
 .. todo:: Resume here: http://ddili.org/ders/d.en/arithmetic.html
 
-.. csv-table:: D Fundamental Types
+.. csv-table:: **D Fundamental Types**
    :header: "Type", "Definition", "Initial Value"
    :widths: 15, 50, 30
 

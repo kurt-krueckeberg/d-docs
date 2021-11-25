@@ -1,4 +1,5 @@
 Convert all of this documentation to Github's Commonmark since it supports syntax highlighting using this syntax:
+=================================================================================================================
 
 ````d
 void main()
@@ -18,3 +19,6 @@ void main()
     writefln("Parallel init: %s msecs", bm[1].total!"msecs");
 }
 ````
+
+There may be a TOC extension for Github Flavored Mark that will make it look just like a RST document.
+Maybe I can use .

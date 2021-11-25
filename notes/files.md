@@ -1,8 +1,8 @@
 Files Module
 ============
 
-See [Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html). I believe it has excellent examples.
-I know to iterate a file line by line, you use this code:
+See [Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html) since I believe it has excellent examples.
+To iterate a file line by line, you use `file.byLine`:
 
 ````d
 #!/usr/bin/env rdmd

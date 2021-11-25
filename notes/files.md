@@ -5,7 +5,6 @@ See [Working with files in the D programming language](http://nomad.uk.net/artic
 To iterate a file line by line, you use `file.byLine`:
 
 ````d
-#!/usr/bin/env rdmd
 import std.exception;
 import std.stdio;
 import std.regex;

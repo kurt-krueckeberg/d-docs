@@ -1,5 +1,5 @@
-D std.regex Intro
-=================
+D std.regex
+===========
 
 * An excellent std.regex [overview and introduction](https://dlang.org/articles/regular-expression.html) that illustrates best practices and techniques.
 * **std.regex** author's [2014 DConf talk](https://archive.org/details/dconf2014-day01-talk04).

@@ -1,5 +1,5 @@
-Convert all of this documentation to Github's Commonmark since it supports syntax highlighting using this syntax:
-=================================================================================================================
+Convert all of the .rst files to github's Commonmark since it supports syntax highlighting using this syntax:
+=============================================================================================================
 
 ````d
 void main()
@@ -21,4 +21,11 @@ void main()
 ````
 
 There may be a TOC extension for Github Flavored Mark that will make it look just like a RST document.
-Maybe I can use .
+
+To generate .html files from the gfm-Markdown use ``cmark-gfm`` with the tables extension flag:
+
+```
+camrk-gfm -e table some_file.md 
+```
+
+To see all the extensions do: ``cmark-gfm --list-extensions``.

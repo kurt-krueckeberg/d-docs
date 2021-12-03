@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+if ($argc != 2) {
+
+  echo "Gfm Markdown file name missing.\n";
+  return;
+}
+
+$cmd ="cmark-gfm -e footnotes -e table -e strikethrough -e autolink -e tagfilter -e tasklist " . $argv[1]; 
+
+exec($cmd);

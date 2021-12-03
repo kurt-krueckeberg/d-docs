@@ -1,7 +1,7 @@
 Files Module
 ============
 
-See [Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html) for a in-depth discussion file handling in D.
+[Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html) explains D file handling in depth.
 
 To iterate a file line by line, you use `file.byLine`:
 

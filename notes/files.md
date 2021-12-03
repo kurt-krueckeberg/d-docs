@@ -1,7 +1,7 @@
 Files Module
 ============
 
-See [Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html). It explains **std.file** through numerous code examples.
+To uderstand how to use **std.file**, see [Working with files in the D programming language](http://nomad.uk.net/articles/working-with-files-in-the-d-programming-language.html), which has numerous code examples.
 
 To iterate a file line by line, you use `file.byLine`:
 

@@ -32,8 +32,7 @@ unit tests.
 
   : Title
 
-DUB configurations can be in one of two formats: **JSON** or **SDLang**.
-The DUB JSON config settings are described
+DUB configurations can be in one of two formats: **JSON** or **SDLang**. The DUB JSON config settings are described
 [here](https://dub.pm/getting_started).
 
 import
@@ -112,7 +111,6 @@ D Fundamental Types
                 code point                      
   ------------------------------------------------------------------------
 
-  : D Basic Types
 
 Skipping Whitespace in stdin
 ----------------------------

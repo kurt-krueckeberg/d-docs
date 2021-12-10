@@ -29,7 +29,5 @@ In addition to these familiar built-in types
 |wchar|UTF-16 code unit|0xFFFF|
 |dchar|UTF-32 code unit and Unicode code point|0x0000FFFF|
 
-D has three other built-in types traditionally implemented in a standard library in other languages. For example, in C++ dynamic arrays are implemented in the C++ standard libary in the std::vector` class. The same is true of the C++ strings, which are likewise implented in the standard libary's std::string class.
-In D, however, dynaimc arrays, strings and associative arrays are build-it types of D (See [D Builtin Rationale](https://dlang.org/articles/builtin.html)) natively implemented by the compiler.
-
-
+D has three other built-in types traditionally implemented in a standard library in other languages. In C++, for example, dynamic arrays are implemented in the C++ standard libary in the `std::vector` class. The same is true of the C++ strings,
+implented in the standard libary's `std::string` class. In D, however, both static and dynamic arrays, strings and associative arrays are native build-it types. See [D Builtin Rationale](https://dlang.org/articles/builtin.html).

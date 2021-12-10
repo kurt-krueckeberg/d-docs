@@ -13,7 +13,15 @@ As [Origins of the D Programming Language](https://dl.acm.org/doi/pdf/10.1145/33
 > To the D programmer, an array slice is no different than a dynamic array. They support the same operations, they each have ptr and length properties, and can be passed as an argument to any function that accepts dynamic arrays.
 > The only difference is a semantic one: a slice is produced from an existing dynamic or static array. A slice shares the same backing memory store as its source array until an element is appended to the slice, in which case new
 > memory is allocated and the contents of the original store are copied over. The similarity between dynamic arrays and slices has led to inconsistent usage of the two terms, with some users maintaining the distinction and others
-> referring to both as slices. 
+> referring to both as slices.
+
+## Tilde(~) Operator for Adding Elements 
+
+* It can only be used with dynamic arrays
+* It cann add a single element to an array or
+* catenate two array
+
+Further examples...
 
 ## Further Informations on Arrays and Slices in D
 

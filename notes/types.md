@@ -3,7 +3,7 @@ Using D Built-in Types
 
 .. todo:: Resume here: http://ddili.org/ders/d.en/arithmetic.html
 
-In addition to these familiar built-in types
+In addition to these familiar built-in types below
 
 |Type|Definition|Initial Value|
 |----|----------|-------------|
@@ -29,5 +29,6 @@ In addition to these familiar built-in types
 |wchar|UTF-16 code unit|0xFFFF|
 |dchar|UTF-32 code unit and Unicode code point|0x0000FFFF|
 
-D has three other built-in types traditionally implemented in a standard library in other languages. In C++, for example, dynamic arrays are implemented in the C++ standard libary in the `std::vector` class. The same is true of the C++ strings,
-implented in the standard libary's `std::string` class. In D, however, both static and dynamic arrays, strings and associative arrays are native build-it types. See [D Builtin Rationale](https://dlang.org/articles/builtin.html).
+TODO: provide corss files links to these other three types mentioned below:
+
+As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three other built-in types traditionally implemented in a standard library: dynamic arrays, associateve arrays and strings. In C++, for example, dynamic arrays, associative arrays and strings are implemented in the C++ standard library--in the `std::vector`, `std::unordere_map` and `std::string`, repectively). 

@@ -1,8 +1,8 @@
 D Introduction
 ==============
 
-Writing Linux Scripts in D
---------------------------
+How to Create a D Linux Script
+------------------------------
 
 The Linux shebang for making a .d an executable script is
 
@@ -18,25 +18,17 @@ configurable cross-platform builds. Execute `dub build` to build your
 project. `dub run` to build and runs it, and `dub test` to build and run
 unit tests.
 
-  -----------------------------------------------------------------------
-  dub command      Explanation
-  ---------------- ------------------------------------------------------
-  dub init         Creates a new project
-  *project*        
-
-  dub run          Builds and runs it
-
-  dub \[run within dub run inside *project folder* fetches all
-  project folder\] dependencies, compiles and runs executable.
-  -----------------------------------------------------------------------
-
-  : Title
+|dub command|Explanation|
+|-----------|-----------|
+|dub init *project*|Creates a new project|
+|dub run|Builds and runs it|
+|dub \[run within dub run inside *project folder*|fetches all project folder\] dependencies, compiles and runs executable.|
 
 DUB configurations can be in one of two formats: **JSON** or **SDLang**. The DUB JSON config settings are described
 [here](https://dub.pm/getting_started).
 
-import
-------
+import *module\_name*
+---------------------
 
 The `import` statement makes all public functions and types from the
 given module available. The D standard library modules are contained

@@ -1,7 +1,7 @@
 D std.regex
 ===========
 
-Sources:
+Learning Resources:
 
 * Dmitry Olshansky's, the author of std.regex, short [tutorial](https://dlang.org/articles/regular-expression.html) illustrates best practices and techniques.
 *  author's [2014 DConf talk](https://archive.org/details/dconf2014-day01-talk04).

@@ -1,14 +1,24 @@
 D Introduction
 ==============
 
-How to Create a D Linux Script
-------------------------------
+Basic Compilers and Tools
+-------------------------
+
+* DMD
+* LDC
+* GDC
+
+
+Linux Shebang for Creating a D Linux Script
+-------------------------------------------
 
 The Linux shebang for making a .d an executable script is
 
 ``` {.bash}
 #!/usr/bin/env rdmd
 ```
+
+
 
 DUB Package Manager Usage
 -------------------------

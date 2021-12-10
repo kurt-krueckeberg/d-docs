@@ -5,6 +5,8 @@ Files Module
 
 To iterate a file line by line, you use `file.byLine`:
 
+ q: What does file.byLine return--what is its return type?
+
 ````d
 import std.exception;
 import std.stdio;

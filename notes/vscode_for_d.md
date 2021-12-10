@@ -1,11 +1,12 @@
-TODO
-====
+# Using the VS Code IDE for D Development
 
-Read and or view:
+## D Plugins for VS Code
+
+**code-d** extension for VS Code
 
 -   [code-d documentation](https://github.com/Pure-D/code-d/blob/master/docs/debugging.md)
 
-Microsoft VS Code Team tutorials:
+## Microsoft VS Code Team Tutorials:
 
 -   [5 Minute Intro](https://www.youtube.com/watch?v=S320N3sxinE)
 -   [VS Code Set up and Basics](https://www.youtube.com/watch?v=SYRwSyjD8oI)

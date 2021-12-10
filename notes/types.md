@@ -1,9 +1,9 @@
 Using D Built-in Types
 =======================
 
-.. todo:: Resume here: http://ddili.org/ders/d.en/arithmetic.html
+## Built-in Scalar Types
 
-In addition to these familiar built-in types below
+D has these familiar built-in scalar types:
 
 |Type|Definition|Initial Value|
 |----|----------|-------------|
@@ -29,6 +29,6 @@ In addition to these familiar built-in types below
 |wchar|UTF-16 code unit|0xFFFF|
 |dchar|UTF-32 code unit and Unicode code point|0x0000FFFF|
 
-TODO: provide corss files links to these other three types mentioned below:
+## Other Built-in Types
 
 As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three other built-in types traditionally implemented in a standard library: dynamic arrays, associateve arrays and strings. In C++, for example, dynamic arrays, associative arrays and strings are implemented in the C++ standard library--in the `std::vector`, `std::unordere_map` and `std::string`, repectively). 

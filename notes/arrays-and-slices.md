@@ -22,6 +22,10 @@ TODO: provide examples here
 
 Comment: Associative arrays also native types in D, as is the string type. See the article [D Builtin Rationale](https://dlang.org/articles/builtin.html) for details. 
 
+## Implicit Conversions
+
+TODO: Add this.
+
 ## Array Slices
 
 A slice is subarray of an existing array. It is a view of a portion of an array (or the entire array). Slices offer great convienece while also being efficient since they have negligible runtime overhead. As [Origins of the D Programming Language](https://dl.acm.org/doi/pdf/10.1145/3386323) explains:

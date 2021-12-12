@@ -1,6 +1,6 @@
 # Arrays and Slices
 
-The D language spec article on [arrays](https://dlang.org/spec/arrays.html) gives a thorough explanation of all features and aspects of arrays. All of the following are arrays in D:
+See the D language spec [arrays](https://dlang.org/spec/arrays.html) a how to use arrays in D. All of the following are arrays in D:
 
 1. Raw pointers
 2. Static arrays. 
@@ -10,17 +10,23 @@ The D language spec article on [arrays](https://dlang.org/spec/arrays.html) give
 
 ## Raw pointers
 
-As in C, raw pointers to allocated memory can be used, and they have the same sematically equivalent `[]` and `*` operators. Raw pointer styles arrays are not bounds check, but slices to them are. See the Slices section below. Raw pointers must point to `null` or to valid memory. 
+Pointers allocated memory work like in C and have the identical `[]`  and `*` operators. Raw pointer arrays are not bounds check, but slices to them are. See the Slices section below. In D raw pointers must point to `null` or to valid memory. 
 
 ## Static Arrays
 
-D also has C-like stack-based static arrays that are value types. They are passed to functions by value and returned from functions by value.
+D also has C-like stack-based arrays that are value types. They are passed to functions by value and returned from functions by value.
 
 ## Dynaimc Arrays
  
-Dynaimc arrays are a built-in type in D. Unlik, say, C++, dynamic arrays are implemented in the compiler and not in a standard library. They are bounds checked. The member variable `ptr` points to the underlying data:
+Dynaimc arrays are a built-in type in D unlike, say, C++, were dynamic arrays are implemented in the standard library in the `std::vector` class. They are automatically bounds checked. The member variable `ptr` points to the underlying data. Some examples:
 
-TODO: provide examples here
+```d
+auto p = new int[7]; // raw pointer 
+a[] slice = p;       // slice will be bounds checked
+foreach(x; slice) {  // Iterate the slice
+  writeln("x = ", x);
+} 
+```
 
 Comment: Associative arrays also native types in D, as is the string type. See the article [D Builtin Rationale](https://dlang.org/articles/builtin.html) for details. 
 

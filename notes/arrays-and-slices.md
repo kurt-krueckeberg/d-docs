@@ -5,6 +5,7 @@ The the D language spec throughly explains [D's arrays](https://dlang.org/spec/a
 1. Raw pointers
 2. Static arrays. 
 3. Dynamic arrays, which are a bult-in type in D 
+4. Associate arrays
 
 ## Raw pointers
 
@@ -26,7 +27,9 @@ foreach(x; slice) {  // Iterate the slice
 } 
 ```
 
-Comment: Associative arrays also native types in D, as is the string type. See the article [D Builtin Rationale](https://dlang.org/articles/builtin.html) for details. 
+## Associative Arrays
+ 
+Associative arrays also native types in D (as is the string type) as [D Builtin Rationale](https://dlang.org/articles/builtin.html) explains.
 
 ## Array Slices
 

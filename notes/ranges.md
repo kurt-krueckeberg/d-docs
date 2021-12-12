@@ -10,8 +10,8 @@ This is a useful abstraction, because it allows us to write algorithms that are 
 
 ### Excellent Introductions
 
-[D Programming  -- Ranges](https://adglob.in/blog/d-programming-ranges/)
-Slides to [Iterators Must Go](https://www.accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf)
+* [D Programming  -- Ranges](https://adglob.in/blog/d-programming-ranges/)
+* Slides to [Iterators Must Go](https://www.accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf)
 
 
 ## Sources of Information

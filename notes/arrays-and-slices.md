@@ -1,10 +1,17 @@
 # Arrays and Slices
 
-[Arrays](https://dlang.org/spec/arrays.html) explains that the following are arrays D:
+As [Arrays](https://dlang.org/spec/arrays.html) explains all of the following are arrays D:
 
 1. Raw C-like pointers
 2. Static C-like arrays. 
 3. Dynamic arrays are a bult-in type ID D. 
+
+## Raw pointers
+
+When memory is allocated to a C-like raw porinter:
+
+D provides the same sematntically equivalent `[]` and `*` operators. Raw pointer styles arrays are not bounds check. They must point to `null` or to valid memory. Slices to them (see Slices below) are
+bounds checked.
 
 ## Static Arrays
 

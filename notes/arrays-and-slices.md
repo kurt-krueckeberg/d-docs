@@ -8,7 +8,7 @@ The the D language spec throughly explains [D's arrays](https://dlang.org/spec/a
 
 ## Raw pointers
 
-Pointers to allocated memory behave identically to pointers in **C** and have the same bulit-in `[]`  and `*` operators. Raw pointer access is not bounds check, but slices to raw pointer are. See the Slices section below. In D raw pointers must point to `null` or to valid memory. 
+Pointers to allocated memory behave identically to pointers in **C** and have the same bulit-in `[]`  and `*` operators. Raw pointer access is not bounds check, but slices to raw pointer are bound checked. See the Slices section below. In D raw pointers must point to `null` or to valid memory. 
 
 ## Static Arrays
 

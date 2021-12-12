@@ -24,10 +24,6 @@ TODO: provide examples here
 
 Comment: Associative arrays also native types in D, as is the string type. See the article [D Builtin Rationale](https://dlang.org/articles/builtin.html) for details. 
 
-## Implicit Conversions
-
-TODO: Add this.
-
 ## Array Slices
 
 A slice is subarray of an existing array. It is a view of a portion of an array (or the entire array). Slices offer great convienece while also being efficient since they have negligible runtime overhead. As [Origins of the D Programming Language](https://dl.acm.org/doi/pdf/10.1145/3386323) explains:
@@ -39,15 +35,18 @@ A slice is subarray of an existing array. It is a view of a portion of an array 
 
 Slices to raw pointers are bounds checked. 
 
-TODO: give example.
-
 ### Operator [] operator is Overloaded for Slices
 
 In D the index operator is overloaded for slices. 
 
-TODO: Give examples.
+TODO: Give examples of how it is overloaded with explanations of the code.
 TODO: provide linek to further explantaion
 
+### Slices can Create a new Array
+
+give brief examples with comments.
+
+TODO: Link to D Programming book examples
 ## Concatenation with the Tilde(~) Operator
 
 * It can only be used with dynamic arrays

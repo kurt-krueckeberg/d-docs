@@ -1,6 +1,6 @@
 # Arrays and Slices
 
-The the D language spec throught explains [arrays](https://dlang.org/spec/arrays.html) in D. All of the following are arrays in D:
+The the D language spec throughly explains [arrays](https://dlang.org/spec/arrays.html) in D. All of the following are arrays in D:
 
 1. Raw pointers
 2. Static arrays. 

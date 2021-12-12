@@ -21,6 +21,9 @@ Dynaimc arrays are a built-in type in D unlike, say, C++ were dynamic arrays are
 
 ```d
 auto p = new int[7]; // raw pointer 
+p[2] = p[2] + 10;
+p[6] = p[2] + 10;
+++p[0];
 int[] slice = p;       // slice will be bounds checked
 foreach(x; slice) {  // Iterate the slice
   writeln("x = ", x);

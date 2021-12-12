@@ -36,7 +36,7 @@ Associative arrays also native types in D (as is the string type) as [D Builtin 
 
 ## Array Slices
 
-A slice is subarray of an existing array. It is a view of a portion of an array (and the portion can be the entire array). Slices offer great convienece while also being efficient since they have negligible runtime overhead. As [Origins of the D Programming Language](https://dl.acm.org/doi/pdf/10.1145/3386323) explains:
+A slice is subarray of an existing array. It is a view of a portion (and the portion can be the entire array) of an array. Slices offer great convienece while also being efficient since they have negligible runtime overhead. As [Origins of the D Programming Language](https://dl.acm.org/doi/pdf/10.1145/3386323) explains:
 
 > To the D programmer, an array slice is no different than a dynamic array. They support the same operations, they each have ptr and length properties, and can be passed as an argument to any function that accepts dynamic arrays.
 > The only difference is a semantic one: a slice is produced from an existing dynamic or static array. A slice shares the same backing memory store as its source array until an element is appended to the slice, in which case new

@@ -12,7 +12,7 @@ Pointers to allocated memory behave identically to pointers in **C** and have th
 
 ## Static Arrays
 
-D also has C-like stack-based arrays that are value types. They are passed to functions by value and returned from functions by value.
+D stack-based arrays that are value types. They are passed to functions by value and returned from functions by value.
 
 ## Dynaimc Arrays
  

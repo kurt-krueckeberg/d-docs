@@ -16,7 +16,7 @@ D stack-based arrays that are value types. They are passed to functions by value
 
 ## Dynaimc Arrays
  
-Dynaimc arrays are a built-in type in D unlike, say, C++, were dynamic arrays are implemented in the standard library in the `std::vector` class. They are automatically bounds checked. The member variable `ptr` points to the underlying data. Some examples:
+Dynaimc arrays are a built-in type in D unlike, say, C++ were dynamic arrays are implemented in the standard library in the `std::vector` class. They are automatically bounds checked. The member variable `ptr` points to the underlying data. Some examples:
 
 ```d
 auto p = new int[7]; // raw pointer 

@@ -45,7 +45,7 @@ A slice is subarray of an existing array. It is a view of a portion (and the por
 
 Slices to raw pointers are bounds checked. 
 
-### Operator [] operator is Overloaded for Slices
+### Operator [] is Overloaded for Slices
 
 In D the index operator is overloaded for slices. 
 

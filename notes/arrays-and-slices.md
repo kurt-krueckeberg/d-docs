@@ -68,7 +68,7 @@ TODO: A example of:
 * [Arrays](https://dlang.org/spec/arrays.html) from **D Lanaguage Reference**.
 * [D Slices](https://dlang.org/articles/d-array-article.html).
 
-## Tilde(~) is the Concatenation Operator
+## Tilde(~) is Array Concatenation Operator
 
 `~` rather than `+` is the array catenatino operator and 
 

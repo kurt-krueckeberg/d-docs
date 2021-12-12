@@ -54,20 +54,25 @@ TODO: provide linek to further explantaion
 
 ### Slices can Create a new Array
 
-give brief examples with comments.
+TODO: give brief examples with comments.
 
-TODO: Link to D Programming book examples
+#### A New Array can Arise from a Slice
 
-## Tilde(~) is the Concatenation Operator
+TODO: A example of:
 
-* It can only be used with dynamic arrays
-* It cann add a single element to an array or
-* catenate two array
+* increasing length
+* copying examples
 
-Further examples...
-
-## Further Informations on Arrays and Slices in D
+### Further Informations on Arrays and Slices in D
 
 * [Arrays](https://dlang.org/spec/arrays.html) from **D Lanaguage Reference**.
 * [D Slices](https://dlang.org/articles/d-array-article.html).
 
+## Tilde(~) is the Concatenation Operator
+
+`~` rather than `+` is the array catenatino operator and 
+
+* It can only be used with dynamic arrays
+* It can add a single element to an array or catenate arrays
+
+Examples:

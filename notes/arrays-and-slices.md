@@ -1,10 +1,12 @@
 # Arrays and Slices
 
-In D [arrays](https://dlang.org/spec/arrays.html) all of the following are arrays:
+The D language spec article on [arrays](https://dlang.org/spec/arrays.html) gives a thorough explanation of all features and aspects of arrays. All of the following are arrays in D:
 
 1. Raw pointers
 2. Static arrays. 
 3. Dynamic arrays, which are a bult-in type in D 
+
+ D [arrays](https://dlang.org/spec/arrays.html) 
 
 ## Raw pointers
 

@@ -6,8 +6,6 @@ The the D language spec throughly explains [D's arrays](https://dlang.org/spec/a
 2. Static arrays. 
 3. Dynamic arrays, which are a bult-in type in D 
 
- D [arrays](https://dlang.org/spec/arrays.html) 
-
 ## Raw pointers
 
 Pointers allocated memory work like in C and have the identical `[]`  and `*` operators. Raw pointer arrays are not bounds check, but slices to them are. See the Slices section below. In D raw pointers must point to `null` or to valid memory. 

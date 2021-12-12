@@ -57,7 +57,8 @@ TODO: provide linek to further explantaion
 give brief examples with comments.
 
 TODO: Link to D Programming book examples
-## Concatenation with the Tilde(~) Operator
+
+## Tilde(~) is the Concatenation Operator
 
 * It can only be used with dynamic arrays
 * It cann add a single element to an array or

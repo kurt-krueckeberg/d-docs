@@ -7,6 +7,13 @@ Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerf
 > that limits adoption by other languages. I propose an API that combines the advantages of Iterator and STL, and I bring evidence that the proposed abstraction is sensible by implementing a superset of STL's algorithms in the D language's standard library.
 
 This is a useful abstraction, because it allows us to write algorithms that are independent of the concrete type of the data source: any concrete type that provides the above interface qualifies as an input range and can be used with any algorithm that expects an input range.
+
+### Excellent Introductions
+
+[D Programming  -- Ranges](https://adglob.in/blog/d-programming-ranges/)
+Slides to [Iterators Must Go](https://www.accu.org/conf-docs/PDFs_2009/AndreiAlexandrescu_iterators-must-go.pdf)
+
+
 ## Sources of Information
 
 ### Basic Introducton to Ranges

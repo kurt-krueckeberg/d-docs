@@ -1,6 +1,6 @@
 # Ranges in D
 
-Andrei Alexandrescu invented [ranges](https://www.informit.com/articles/printerfriendly/1407357) while implementing D's generic algorithms package.
+Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerfriendly/1407357) while implementing D's generic algorithms package.
 
 > Though iterators are safe and sensible, their interface prevents definition of flexible, general, and efficient container-independent algorithms. For example, you can't reasonably expect to sort, organize as a binary heap, or even reverse a container
 > by just using its Iterator. [To provide container-independent algorithms] C++ defines its own conceptual hierarchy of iterators...  However, STL iterators are marred by lack of safety, difficulty of usage, difficulty of definition, and a very close relationship to C++

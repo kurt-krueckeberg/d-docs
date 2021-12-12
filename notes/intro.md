@@ -18,8 +18,6 @@ The Linux shebang for making a .d an executable script is
 #!/usr/bin/env rdmd
 ```
 
-
-
 DUB Package Manager Usage
 -------------------------
 
@@ -113,7 +111,6 @@ D Fundamental Types
                 code point                      
   ------------------------------------------------------------------------
 
-
 Skipping Whitespace in stdin
 ----------------------------
 
@@ -153,4 +150,13 @@ Note
 
 Use **\" %s\"** with **read(\" %s\", &someVar)** to ignore whitespace
 characters in stdin.
+
+## Definitive Lanuage Overiew
+
+See [Definitive Lanuage Overiew](https://dlang.org/comparison.html)
+
+## D for C++ Programmers
+
+See [D for C++ Programmers](https://wiki.dlang.org/Programming_in_D_for_C%2B%2B_Programmers)
+See [Definitive Lanuage Overiew](https://dlang.org/comparison.html)
 :::

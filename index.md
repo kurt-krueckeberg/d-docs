@@ -7,6 +7,7 @@ Welcome to D Lanugage Notes's documentation!
 * notes/unicode.md
 * notes/modules.md
 * notes/arrays-and-slices.md
+* notes/ranges.md
 * notes/assoc-arrays.md
 * notes/exceptions.md
 * notes/files.md

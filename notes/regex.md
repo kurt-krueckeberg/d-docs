@@ -10,3 +10,9 @@ Learning Resources:
 * [Digital Mars: Regular Expressions Article](https://www.digitalmars.com/d/2.0/regular-expression.html)
 * [Digital Mars: std.regex](https://www.digitalmars.com/d/2.0/phobos/std_regex.html)
 * The D Language  [reference article](https://dlang.org/phobos/std\_regex.html) has lots of examples.
+
+
+## [RegexMatach](https://dlang.org/library/std/regex/regex\_match.html)
+
+`captures` property:
+

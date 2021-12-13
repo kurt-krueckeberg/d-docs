@@ -12,10 +12,11 @@ The GoF iterator didn't cover random bidriection or random access. C++ introduce
 Resume article above [here](https://www.informit.com/articles/article.aspx?p=1407357&seqNum=7).
 
 Read:
-[Ranges: the STL to the Next Level](https://www.fluentcpp.com/2017/01/12/ranges-stl-to-the-next-level/)
-[Input Iterators vs Input Ranges](((https://ericniebler.com/2013/11/07/input-iterators-vs-input-ranges/)
-[C++20 Ranges — Complete Guide](https://itnext.io/c-20-ranges-complete-guide-4d26e3511db0)
-[A Beginners Guide to Ranges and Views](https://hannes.hauswedell.net/post/2019/11/30/range_intro/)
+
+* [Ranges: the STL to the Next Level](https://www.fluentcpp.com/2017/01/12/ranges-stl-to-the-next-level/)
+* [Input Iterators vs Input Ranges](https://ericniebler.com/2013/11/07/input-iterators-vs-input-ranges/)
+* [C++20 Ranges — Complete Guide](https://itnext.io/c-20-ranges-complete-guide-4d26e3511db0)
+* [A Beginners Guide to Ranges and Views](https://hannes.hauswedell.net/post/2019/11/30/range_intro/)
 
 This is a useful abstraction, because it allows us to write algorithms that are independent of the concrete type of the data source: any concrete type that provides the above interface qualifies as an input range and can be used with any algorithm that expects an input range.
 

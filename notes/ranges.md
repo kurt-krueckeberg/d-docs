@@ -6,6 +6,8 @@ Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerf
 > by just using its Iterator. [To provide container-independent algorithms] C++ defines its own conceptual hierarchy of iterators...  However, STL iterators are marred by lack of safety, difficulty of usage, difficulty of definition, and a very close relationship to C++
 > that limits adoption by other languages. I propose an API that combines the advantages of Iterator and STL, and I bring evidence that the proposed abstraction is sensible by implementing a superset of STL's algorithms in the D language's standard library.
 
+Resume article above [here[(https://www.informit.com/articles/article.aspx?p=1407357&seqNum=7).
+
 This is a useful abstraction, because it allows us to write algorithms that are independent of the concrete type of the data source: any concrete type that provides the above interface qualifies as an input range and can be used with any algorithm that expects an input range.
 
 ### Excellent Introductions

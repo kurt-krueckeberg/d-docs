@@ -6,8 +6,8 @@ Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerf
 > by just using its Iterator. [To provide container-independent algorithms] C++ defines its own conceptual hierarchy of iterators...  However, STL iterators are marred by lack of safety, difficulty of usage, difficulty of definition, and a very close relationship to C++
 > that limits adoption by other languages. I propose an API that combines the advantages of Iterator and STL, and I bring evidence that the proposed abstraction is sensible by implementing a superset of STL's algorithms in the D language's standard library.
 
-C++ iterators suffer from being modelled on pointers. C++ stl alggoritms need two iterators, one that means end-of-iteration. But the GoF iterator pair only requires one iterator because it contains a member variable indication "iteration is done."
-Iterator categories--read, writer, forward, bidirecitonal, random--don't address orthogonal issues of (in the case of the STL) where the iterator is swappable, writable, etc.
+C++ iterators suffer from being modelled on pointers. C++ STL algorihtms need two iterators, one that "indicates one past the end" just like pointers. The GoF iterator only requires one iterator because it contains a member variable that indicates when iteration is done.
+The GoF iterator didn't cover random bidriection or random access. C++ introduced interator "concepts" or  categories--read, writer, forward, bidirecitonal, random. But this didn't address orthogonal issues of (in the case of the STL) where the iterator is swappable, writable, etc.
 
 Resume article above [here](https://www.informit.com/articles/article.aspx?p=1407357&seqNum=7).
 

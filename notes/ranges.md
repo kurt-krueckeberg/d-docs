@@ -8,6 +8,10 @@ Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerf
 
 Resume article above [here](https://www.informit.com/articles/article.aspx?p=1407357&seqNum=7).
 
+## Iterators and Ranges: Comparing C++ to D to Rust
+
+* [Iterators and Ranges: Comparing C++ to D to Rust - Barry Revzin](https://www.youtube.com/watch?v=d3qY4dZ2r4w)
+
 This is a useful abstraction, because it allows us to write algorithms that are independent of the concrete type of the data source: any concrete type that provides the above interface qualifies as an input range and can be used with any algorithm that expects an input range.
 
 ### Excellent Introductions

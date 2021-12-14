@@ -21,17 +21,17 @@ qsort (x:xs) = qsort (filter (&lt; x) xs) ++ [x]
 ++ qsort (filter (&gt;= x) xs)
 </code></pre>
 <p>Code like the above has been used up and down the tubes to demonstrate the superiority of functional languages. It's a functional-style quicksort written in Haskell that can be understood, at least according
-to some, without any prior exposure. First line: <code>qsort</code> of the empty list is the empty list. Second line (broken to fit in a narrow space): <code>qsort</code> for a list starting with x followed by some more <code>xs</code> is a concatenation
-('++') of three lists: all stuff in xs that's smaller than x sorted, x itself, and all stuff in xs that's greater than or equal to x, again sorted. Try defining quicksort in two lines in your Blub language!</p>
+to some, without any prior exposure. First line: <code>qsort</code> of the empty list is the empty list. Second line (broken to fit in a narrow space): <code>qsort</code> for a list starting with <code>x</code> followed by some more <code>xs</code> is a concatenation
+('++') of three lists: all stuff in xs that's smaller than <code>x</code> sorted, <code>x</code> itself, and all stuff in xs that's greater than or equal to x, again sorted. Try defining quicksort in two lines in your Blub language!</p>
 <p>As much as I like Haskell, I look at that example with a mix of admiration and indignation, same as I'd look at an example illustrating C's virtues by means of a buffer overrun exploit. Both cases inspire
 awe, but I think they illustrate something bad rather than something good, and I could never bring myself to write or use that kind of trick.</p>
-<p>There are a few things about qsort that don't quite cut the mustard.  For starters, qsort is not really quicksort. Quicksort, as defined by Hoare in his seminal paper <sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup>, is an <em>in-place</em> algorithm. Hoare's
-in-place partition is his paper's main contribution and a quintessential part of quicksort. qsort is not in-place, so it could be at best considered an exercise inspired by quicksort. (And not a great
-exercise at that. It does so much ancillary work it's not even funny---did you think that those two passes through the list and all those concatenations come for free?) Second, qsort makes a patently bad
+<p>There are a few things about <code>qsort</code> that don't quite cut the mustard.  For starters, <code>qsort</code> is not really quicksort. Quicksort, as defined by Hoare in his seminal paper <sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup>, is an <em>in-place</em> algorithm. Hoare's
+in-place partition is his paper's main contribution and a quintessential part of quicksort. <code>qsort</code> is not in-place, so it could be at best considered an exercise inspired by quicksort. (And not a great
+exercise at that. It does so much ancillary work it's not even funny---did you think that those two passes through the list and all those concatenations come for free?) Second, <code>qsort</code> makes a patently bad
 choice of pivot by selecting the first element of the sequence, thus nicely guaranteeing quadratic performance for almost sorted data. And the thing is, in reality, input data is seldom really random. It might
-have been sorted at some point, then augmented with additional elements, to be sorted again later. Choosing a random pivot is the correct solution, but you see, that would make qsort quite a lot longer than
+have been sorted at some point, then augmented with additional elements, to be sorted again later. Choosing a random pivot is the correct solution, but you see, that would make <code>qsort</code> quite a lot longer than
 three lines, because selecting one element at random from a singly-linked list is a non-trivial undertaking.</p>
-<p>This finally brings me to the third issue I have with qsort, and to the subject of this article: qsort sends a subtler message: Singly-linked lists and forward iteration are everything you need. They aren't, and
+<p>This finally brings me to the third issue I have with qsort, and to the subject of this article: <code>qsort</code> sends a subtler message: Singly-linked lists and forward iteration are everything you need. They aren't, and
 they shouldn't be made to seem like they are.</p>
 <p>Lisp has pioneered ubiquitous use of singly-linked lists (&quot;S-lists&quot;).  S-lists connect together data and reference-to-next-element pairs in arbitrary shapes. In fact, S-lists enjoy the <em>closure</em> property <sup class="footnote-ref"><a href="#fn3" id="fnref3">3</a></sup>
 (not to be confused with function closures), meaning that they can represent any data structure, no matter how complex, by encoding it as directed graphs. That seems quite powerful, were it not for the
@@ -83,25 +83,16 @@ different categories of iterators. It's that there are only a <em>few</em> of th
 function parameters: If there are too many of them, then probably something went wrong. STL has shown that a very generous collection of algorithms can be implemented with only five iterator categories:</p>
 <ul>
 <li>
-<p><em>Input iterators</em>, modeling one-pass input such as reading from</p>
-<blockquote>
-<p>files or network streams</p>
-</blockquote>
+<p><em>Input iterators</em>, modeling one-pass input such as reading from files or network streams</p>
 </li>
 <li>
-<p><em>Output iterators</em>, modeling one-pass output such as writing to</p>
-<blockquote>
-<p>sequential files or network streams</p>
-</blockquote>
+<p><em>Output iterators</em>, modeling one-pass output such as writing to sequential files or network streams</p>
 </li>
 <li>
 <p><em>Forward iterators</em>, modeling access to singly-linked lists</p>
 </li>
 <li>
-<p><em>Bidirectional iterators</em>, modeling access to doubly-linked lists</p>
-<blockquote>
-<p>and (somewhat unexpectedly) UTF-encoded strings</p>
-</blockquote>
+<p><em>Bidirectional iterators</em>, modeling access to doubly-linked lists and (somewhat unexpectedly) UTF-encoded strings</p>
 </li>
 <li>
 <p><em>Random access iterators</em>, modeling array access</p>
@@ -110,7 +101,7 @@ function parameters: If there are too many of them, then probably something went
 <p>The conceptual hierarchy of the five iterator categories is quite
 simple: input and output are the most primitive, and each of the more
 capable categories specializes the previous one, as shown in <a href="https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg">Figure 1</a>.</p>
-<p><img src="./images_on_iterators//media/image1.png" alt="" />{width=&quot;3.0069444444444446in&quot; height=&quot;2.4340277777777777in&quot;}</p>
+<p><img src="./images_on_iterators//media/image1.png" alt="" /></p>
 <p><a href="">Figure 1</a>
 The iterator concept hierarchy in STL.</p>
 <h3>Building on Pointers</h3>
@@ -155,18 +146,15 @@ additionally in a second hierarchy of categories. These new categories are ortho
 <p><strong>Swappable iterators:</strong> You can write iter_swap(iter1, iter2).</p>
 </li>
 <li>
-<p>lvalue <strong>iterators:</strong> You can write address = &amp;(*iter); that is,</p>
-<blockquote>
-<p>you can take the address at which the iterated element lies in
-memory</p>
-</blockquote>
+<p><strong>lvalue iterators:</strong> You can write address = <code>&amp;(\*iter);</code> that is,
+you can take the address at which the iterated element lies in memory</p>
 </li>
 </ul>
 <p><a href="https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg">Figure 2</a>
 illustrates the relationships among these categories. Any of them can be combined with one classic category in <a href="https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg">Figure 1</a>.
 For example, you could define and use a bidirectional swappable
 iterator.</p>
-<p><img src="./images_on_iterators//media/image2.png" alt="" />{width=&quot;3.091666666666667in&quot; height=&quot;2.0034722222222223in&quot;}</p>
+<p><img src="./images_on_iterators//media/image2.png" alt="" /></p>
 <p><a href="">Figure 2</a>
 The iterator access hierarchy proposed for the STL by Abrahams et al. <sup class="footnote-ref"><a href="#fn6" id="fnref6">6</a></sup> #### Lack of Safety</p>
 <p>STL iterators are unsafe in several ways. Correct pairing of iterators bracketing a range is left entirely to the user, and wrong pairings are easy to produce and expensive to check. It's also expensive to check
@@ -180,7 +168,7 @@ level of checking.</p>
 <p>Various quirks of C++ make the task of defining and using iterators unduly difficult. Defining a correct iterator is notoriously hard, to the extent that Boost defined a special library to help with just
 that <sup class="footnote-ref"><a href="#fn7" id="fnref7">7</a></sup>. This in spite of the fact that an iterator really needs to define only three basic operations (compare, advance, and dereference).  Code using iterators can be pretty complex, too. For example, naysayers
 commonly bring up examples like this:</p>
-<pre><code class="language-c++">vector&lt;int&gt; v = ...;
+<pre><code class="language-cpp">vector&lt;int&gt; v = ...;
 for (vector&lt;int&gt;::iterator i = v.begin(); i != v.end(); ++i) {
 ... use *i ...
 }
@@ -192,483 +180,330 @@ iteration state, but copying an input iterator just creates a new view of the sa
 <p>In an attempt to improve iterator usage, Adobe <sup class="footnote-ref"><a href="#fn8" id="fnref8">8</a></sup> and Boost <sup class="footnote-ref"><a href="#fn9" id="fnref9">9</a></sup> independently defined an abstraction called <em>range</em> that pairs two iterators together. Of course, the iterators must belong to the same
 logical collection (or stream). Then, algorithms can use a range whenever a pair of iterators is expected, which makes pairing errors both less likely and easier to spot. When calling an algorithm with
 ranges, you write:</p>
-<pre><code class="language-c++">vector\&lt;int\&gt; v;
-...
-
-*// implicitly take the \&quot;all\&quot; range of v*
-
+<pre><code class="language-cpp">vector&lt;int&gt; v;
+//...snip
+// implicitly take the \&quot;all\&quot; range of v*
 sort(v);
-
-instead of the customary:
-
-sort(v.begin(), v.end());
-
-If you use algorithms a lot, such ranges will simplify much of your code. Composition with ranges is significantly easier, too. Although these improvements are not insignificant, Adobe/Boost ranges can\'t
-address all of the deficiencies in the STL\'s design.
-
-One subtle problem with STL generalizing C++ pointers---if you allow me a little speculation---is that its detailed design is inextricably tied to C++. That makes STL difficult to understand without actually knowing
+</code></pre>
+<p>instead of the customary:</p>
+<pre><code class="language-cpp">sort(v.begin(), v.end());
+</code></pre>
+<p>If you use algorithms a lot, such ranges will simplify much of your code. Composition with ranges is significantly easier, too. Although these improvements are not insignificant, Adobe/Boost ranges can't
+address all of the deficiencies in the STL's design.</p>
+<p>One subtle problem with STL generalizing C++ pointers---if you allow me a little speculation---is that its detailed design is inextricably tied to C++. That makes STL difficult to understand without actually knowing
 C++ to a good bit of depth; the putative newcomer who wants to get the gist of the STL without absorbing C++ will meet a wall of detail---some important, much incidental---that is liable to discourage further study.
 To this day, the STL is unfortunately still provincial: although revered among C++ programmers, it is virtually absent from the larger programming community. Even languages that came to the fore after the
-STL continue to obsess with perfecting the obsolete \&quot;straddle\&quot; high-jump technique. Why? I think it\'s not impossible that the authors of those languages or APIs thumbed with puzzlement through some STL
-examples, with this result: \&quot;This is odd... We can do this already...  This is too verbose... Look at this one, it\'s just bizarre.... Aw, forget it. Let\'s just make Find a method of Array.\&quot;
-
-CDJ\#++
--------
-
-CDJ\#++ (already featured in the code snippet above) is the language used throughout for code examples. It is a stylized pseudo-language drawing on C++, C\#, Java, and D. The intent is to keep the article
-language-independent and focus on design, not code syntax and other minute details. Languages typically accomplish similar tasks differently, so CDJ\# ++ does not provide constructors or destructors,
+STL continue to obsess with perfecting the obsolete &quot;straddle&quot; high-jump technique. Why? I think it's not impossible that the authors of those languages or APIs thumbed with puzzlement through some STL
+examples, with this result: &quot;This is odd... We can do this already...  This is too verbose... Look at this one, it's just bizarre.... Aw, forget it. Let's just make Find a method of Array.&quot;</p>
+<h2>CDJ#++</h2>
+<p>CDJ#++ (already featured in the code snippet above) is the language used throughout for code examples. It is a stylized pseudo-language drawing on C++, C#, Java, and D. The intent is to keep the article
+language-independent and focus on design, not code syntax and other minute details. Languages typically accomplish similar tasks differently, so CDJ# ++ does not provide constructors or destructors,
 mostly glosses over generic type creation and use, defines interfaces
-loosely, and makes pass-by-reference optional.
+loosely, and makes pass-by-reference optional.</p>
+<p>If you are familiar with any of the aforementioned languages, you should have no trouble understanding what CDJ# ++'s constructs do, although translating some into a specific language may be difficult.</p>
+<h2>A Fresh Approach to Iteration</h2>
+<p>Notice that GoF iterators are not subject to many of the safety issues of STL iterators. You don't need two GoF iterators to iterate over a collection, so pairing-related errors are avoided by design. Also, it is
+quite easy to implement some minimal checking inside the primitives IsDone, Next, and CurrentItem, as shown below for a hypothetical iterator over an array holding objects of type T.</p>
+<pre><code class="language-cpp">class ArrayIterator {
 
-If you are familiar with any of the aforementioned languages, you should have no trouble understanding what CDJ\# ++\'s constructs do, although translating some into a specific language may be difficult.
-
-A Fresh Approach to Iteration
------------------------------
-
-Notice that GoF iterators are not subject to many of the safety issues of STL iterators. You don\'t need two GoF iterators to iterate over a collection, so pairing-related errors are avoided by design. Also, it is
-quite easy to implement some minimal checking inside the primitives IsDone, Next, and CurrentItem, as shown below for a hypothetical iterator over an array holding objects of type T.
-
-class ArrayIterator {
-
-public:
-
-bool IsDone() {
-
-assert(begin \&lt;= end);
-
-return begin == end;
-
+   public:
+   
+      bool IsDone()
+      {
+      assert(begin \&lt;= end);
+      return begin == end;
+      }
+      
+      void Next()
+      {
+      assert(!IsDone());
+      ++begin;
+      }
+      
+      T CurrentItem()
+      {
+      assert(!IsDone());
+      return \*begin;
+      }
+      
+      private:
+      T* begin;
+      T* end;
 }
-
-void Next() {
-
-assert(!IsDone());
-
-++begin;
-
-}
-
-T CurrentItem() {
-
-assert(!IsDone());
-
-return \*begin;
-
-}
-
-private:
-
-T\* begin;
-
-T\* end;
-
-}
-
-The GoF interface is naturally more robust without necessarily losing efficiency. The conceptual gain is that the limits are now an indivisible unit presenting a higher-level and safer interface.
-
-For some uses, GoF-style iterators can be just as efficient as iterators, though they sometimes suffer a little in the comparison. For example, the tests for IsDone are just as efficient as with iterators.
-However, an ArrayIterator is twice the size of an STL iterator, which can be a significant overhead if the iterator is used to refer to a single container element. (For example, consider a large array and a
-bunch of iterators referring to elements in it.) Yet in many cases, STL iterators must be used in pairs anyway, and for such cases there is no overhead at all.
-
-On the other hand, the STL has effectively demonstrated that iteration is about more than just IsDone, Next, and CurrentItem. Let\'s adopt and improve on both the STL\'s and the GoF iterator ideas to get an
-efficient, flexible, simple, and highly useful iterator. Instead of building upon pointers as the fundamental abstraction, as does the STL, it\'s better to start with the GoF approach. This allows the iterator
-type to be smarter and safer without losing efficiency, at least in most use cases. The iterator categories in the STL are highly useful, so let\'s keep them. As the previous example shows, the new iterator must
-know its limits---the beginning and end of its range. Therefore, the name of this new candidate abstraction shall be \&quot;range,\&quot; and its refinements---input, output, forward, double-ended, and random access,
-if not others---\&quot;categories.\&quot;
-
-### Separating Access from Traversal
-
-This article is concerned with traversal more than access, but the proposal by Abrahams et al. (discussed in the section \&quot;Traversal and Access\&quot;) is compelling. Let\'s take one simple abstraction step that
-allows us to benefit from the separation, without needing to discuss access details in great detail: We encapsulate the access category of ranges as a type called Ref\&lt;T\&gt;, where T is the native type of the
-range. Ref\&lt;T\&gt; is a type that may simply be a synonym for T, or for reference-to-T, but can also be a proxy to a T allowing some or all of read, write, swap, and address taking. Essentially Ref\&lt;T\&gt; is a
-wildcard that could fulfill any of the categories in [Figure 2](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg).  The range categories we discuss below may be parameterized with Ref in
-addition to T.
-
-### One-Pass Ranges
-
-Let\'s start with input from a sequential stream, such as reading one keystroke at a time from the keyboard, reading a network packet, or using C\'s fgetc API. For these, we can easily adapt the
-IsDone/CurrentItem/Next troika: IsDone checks for end-of-input and fills a one-element buffer held inside the range object, CurrentItem returns the buffer, and Next sets an internal flag that tells IsDone to read the
-next element when called. Let\'s define the one-pass interface and also take the opportunity to change the names of the primitives. (As you\'ll soon see, the new names scale better when we extend the interface.)
-
-interface OnePassRange {
-
-bool empty();
-
-Ref\&lt;T\&gt; front();
-
-void popFront();
-
-}
-
-The use of \&quot;interface\&quot; above is informal. Depending on your language of choice, you could use explicit interfaces but also implicit interfaces and duck typing [^10] (e.g., \&quot;If it has empty, front, and
-popFront then it\'s an input range\&quot;).
-
-To use OnePassRange, you\'d write a loop along the following lines:
-
-OnePassRange r = \...;
-
-for (; !r.empty(); r.popFront()) {
-
-\... use r.front() \...
-
-}
-
-With input ranges, we can already define some pretty neat algorithms, such as the functional powerhouses map and reduce. To keep things simple, let\'s take a look at the find algorithm:
-
-OnePassRange find(OnePassRange r, T value) {
-
-for (; !r.empty(); r.popFront()) {
-
-if (r.front() == value) break;
-
-}
-
-return r;
-
-}
-
-find has a very simple specification---it advances the passed-in range until it finds the value, or until the range is exhausted. It returns the balance of the range starting with the found value.
-
-Note that one-pass ranges allow output as well as input---it\'s up to whichever Ref\&lt;T\&gt; you use to allow reading, writing, or both. If we denote a writable onepass range with WOnePassRange, we can define the
-copy algorithm like this:
-
-WOnePassRange copy(
-
-OnePassRange src, WOnePassRange tgt) {
-
-for (; !src.empty();
-
-src.popFront(), tgt.popFront()) {
-
-assert(!tgt.empty());
-
-tgt.front() = src.front();
-
-}
-
-return tgt;
-
-}
-
-The copy function returns the balance of the target range, which allows you to continue copying in it.
-
-### Forward Ranges
-
-Forward ranges are most similar to what functional languages and GoF iterators implement: strictly forward iteration over an in-memory entity.
-
-interface ForwardRange : OnePassRange {
-
-ForwardRange save();
-
-}
-
-ForwardRange defines all of OnePassRange\'s primitives plus save, which returns a snapshot of the iteration state.
-
-Why is just a regular copy not enough?
-
-void fun(ForwardRange r) {
-
-ForwardRange lookIMadeACopy = r;
-
-\...
-
-}
-
-The save method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all---it\'s an alias, another reference to the same underlying Range object. Copying
-the actual object requires a method call. Second, in a language with value semantics, like C++, there\'s no distinction between copying to pass an argument to a function and copying to save a snapshot of the
-range. Calling save makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct---a
-perennial source of trouble.)
-
-Using the forward range interface, we can define a host of interesting algorithms. To get an idea of what range-based algorithms would look like, consider defining a function findAdjacent that advances through a
-range until its first and second elements are equal:
-
-ForwardRange findAdjacent(ForwardRange r){
-
-if (!r.empty()) {
-
-auto s = r.save();
-
-s.popFront();
-
-for (; !s.empty();
-
-r.popFront(), s.popFront()) {
-
-if (r.front() == s.front()) break;
-
-}
-
-}
-
-return r;
-
-}
-
-After auto s = r.save(); the ranges s and r are considered independent.  If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
-ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because r.front() is
-trivially equal to s.front() when r and s are actually tied together.)
-
-### Double-Ended Ranges
-
-The next step of range specialization is to define double-ended ranges, characterized by two extra methods, back and popBack, corresponding to front and popFront for forward iteration:
-
-interface DoubleEndedRange : ForwardRange {
-
-Ref\&lt;T\&gt; back();
-
-void popBack();
-
-}
-
-Let\'s try our hand at the reverse algorithm, which reverses a swappable double-ended range in place.
-
-void reverse(DoubleEndedRange r) {
-
-while (!r.empty()) {
-
-swap(r.front(), r.back());
-
-r.popFront();
-
-if (r.empty()) break;
-
-r.popBack();
-
-}
-
-}
-
-Easy as pie. We can define not only algorithms that use ranges, but also new ranges, which is very useful. For example, defining a range Retro that walks a double-ended range backwards is a simple matter of
-cross-wiring front with back and popFront with popBack:
-
-struct Retro\&lt;DoubleEndedRange\&gt; {
-
-private DoubleEndedRange r;
-
-bool empty() { return r.empty(); }
-
-Ref\&lt;T\&gt; front() { return r.back(); }
-
-void popFront() { r.popBack(); }
-
-Ref\&lt;T\&gt; back() { return r.front(); }
-
-void popBack() { r.popFront(); }
-
-}
-
-**NOTE**
-
-The name \&quot;retro\&quot; is not quite fitting, but the more correct \&quot;reverser\&quot; seemed forced.
-### Random Access Ranges
-
-The most powerful range of all, the random access range, adds constant-time indexed access in addition to the single-ended range primitives. This category of range notably covers contiguous arrays but
-also noncontiguous structures such as STL\'s deque. The random access interface offers all of ForwardRange\'s primitives, plus two random access primitives, at and slice. at fetches an element given the index,
-and slice produces a subrange lying between two indices.
-
-interface RandomAccessRange : ForwardRange {
-
-Ref\&lt;T\&gt; at(int i);
-
-RandomAccessRange slice(int i, int j);
-
-}
-
-A startling detail is that RandomAccessRange extends ForwardRange, not DoubleEndedRange. What\'s happening? Infiniteness, that\'s what happens.  Consider a simple range that yields numbers modulo 10: 0, 1, 2, ..., 9,
-0, 1, .... Given an index, it\'s easy to compute the corresponding series element, so the range is rightfully a RandomAccessRange. But this range does not have a \&quot;last\&quot; element, so it cannot define
-DoubleEndedRange\'s primitives. So a random access range extends different concepts, depending on its finiteness.
-
-Many algorithms require constant-time slicing. Consider quicksort as an example: it cannot select a good pivot (ahem) unless it has constant-time random access, and then it needs constant-time slicing to
-divide the input in two at a randomly chosen point.
-
-[Figure 3](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig03.jpg)
-shows the proposed conceptual hierarchy for ranges.
-
-![](./images_on_iterators//media/image3.png){width=&quot;4.267361111111111in&quot; height=&quot;2.48125in&quot;}
-
-[Figure 3](javascript:popUp('/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig03.jpg'))
-The proposed Range concept hierarchy.
-
-Experience with Ranges
-----------------------
-
-One very good question is this: Are ranges as defined above expressive enough to allow implementing, for example, all of STL? How about more than that? Clearly iterators, being a lower-level abstraction, can be
-used to do things ranges cannot. However, my experience suggests that the loss of expressiveness is minimal and easily outweighed by the advantages of the high-level abstraction and safety of ranges.
-
-I didn\'t know how to prove that ranges are sufficiently expressive. All I could do was to spin some code. As mentioned in the introduction, I\'ve implemented D\'s standard algorithms [^5] entirely in terms of
-ranges. D\'s library includes all of STL\'s functionality, and after gaining courage I added quite a few extra algorithms and ranges to it.  The following summarizes my experience with ranges while doing that
-work.
-
-Optional Range Capabilities
----------------------------
-
-The range API defined so far is surprisingly capable, allowing the implementation of many algorithms in a container-independent manner.  However, some useful primitives are conspicuously absent. For example,
-most random access ranges and some of the others support a notion of length. The length of a range can be computed easily for even an input range by simply walking it to exhaustion, but certain containers
-naturally support constant-time length as a primitive.
-
-Interestingly, length is not restricted to a specific range category.  One might suppose that random access ranges must have a length, whereas others don\'t. However, there are random access ranges that don\'t have
-a length. Infinite ranges (such as the range of numbers modulo 10 discussed above in the section \&quot;Random Access Ranges\&quot;) are an obvious example, but there are more subtle cases. Consider, for example, a
-circular buffer implemented atop an array. You can access the ith element in constant time---it\'s the (i % n)th element of the array.  Claiming that the length of the buffer itself is n may, however,
-surprise clients: They\'d expect that taking n steps would take them to the end of the sequence, but that doesn\'t happen. Conversely, there are even input ranges that have a length---for example, a range that yields
-100 random numbers.
-
-So length is an optional attribute. If the range can define it, it should, but it\'s never obligated to do so. A range-based algorithm may or may not require that length be defined by its range parameters.
-
-Infiniteness is another property that turned out to be quite useful in practice. An infinite forward range would always return false from empty(). Detecting that is difficult in most languages, so a separate
-Boolean property or trait isInfinite could be provided. I don\'t think infiniteness is an essential component of a range API, but it was very easy to define in D with no additional effort, and sometimes comes in
-quite handy. There is also a relationship (briefly alluded to in the section \&quot;Random Access Ranges\&quot;) between random access ranges, double-ended ranges, and infiniteness: If a random access range is
-infinite, it extends a forward range. Otherwise, it extends a double-ended range.
-
-Other, more exotic range capabilities are primitives such as lookahead or putback. An input range may have a lookahead capability up to a specified number of elements and/or the feature of allowing an element
-to be returned to the range. C\'s sequential file API offers the ungetc function, which is guaranteed to work for at least one character. The primitives lookahead and putback are useful in a variety of
-applications, particularly those concerned with parsing streams.
-
-Higher-Order Ranges
--------------------
-
-In keeping with higher-order functions that take and return other functions, a higher-order range is one that aggregates and manipulates other ranges, while itself still offering a range interface. Building
-ranges that decorate other ranges is easy, useful, and fun. In fact, higher-order ranges fulfill the promise that many saw in the early days of the STL. Back then, people thought custom iterators would solve many
-problems, and consequently defined quite a few of them. The idea, however, has had limited success. I\'m not sure why, but I hypothesize that the difficulties of defining iterators and the verboseness of using
-them were possible factors.
-
-Ranges, by contrast, are very easy to define and use. The result of many algorithms are, in fact, custom ranges. Consider, for example, the classic higher-order function filter, which takes a range r plus a
-predicate, and returns a range that only offers the elements of r satisfying the predicate. The work that filter itself does is minimal---it merely constructs and returns a range type, call it Filter,
-that does the filtration in its iteration primitives.
-
--   **Laziness.** Higher-order ranges offer the opportunity of doing
-    &gt; computation lazily, in the style preferred by functional
-    &gt; languages, instead of eagerly. Consider, for example, the STL
-    &gt; algorithm set\_union that takes two sorted ranges and yields one
-    &gt; sorted range containing the elements of both ranges, in linear
-    &gt; time. set\_union is eager---when it returns, it has finished the
-    &gt; job. This approach has two problems. First, you need to create
-    &gt; (and possibly allocate memory for) the target range. This is
-    &gt; wasteful of both memory and time if all you want to do is peek at
-    &gt; each element of set\_union in turn and maybe finish the loop
-    &gt; without inspecting all elements. Second, eager set\_union needs to
-    &gt; read all of its input before finishing, which simply does not work
-    &gt; with infinite ranges.
-
-A classic argument in favor of lazy evaluation is that it leads to better modular composition. This is because lazy evaluation allows for much more involved compositions, with powerful generators that construct a large data space, out of which a selector chooses the
-items of interest. This advantage has been beautifully argued by Hughes [^9] and is famously used by Google in its implementation of the MapReduce algorithm [^6]. D\'s standard library uses lazy
-evaluation wherever possible, to great effect.
-
--   **Preserving Range Categories.** Recall Retro, a range that
-    &gt; traverses a given range backwards. Clearly the original range,
-    &gt; call it r, must offer double-ended iteration. Question: If the
-    &gt; original range offered random access, should Retro also offer
-    &gt; random access? The answer is a resounding yes. As a rule, a
-    &gt; higher-order range must offer the highest capability that it can,
-    &gt; subject to what the original range can offer. So Retro should do
-    &gt; something like this:
-
-    struct Retro\&lt;DoubleEndedRange\&gt; {
-
-    \... as before \...
-
-    static if (isRandomAccess(DoubleEndedRange)
-
-    &amp;&amp; hasLength(DoubleEndedRange)) {
-
-    Ref\&lt;T\&gt; at(unsigned i) {
-
-    return r.at(r.length() - 1 - i);
-
-    }
-
-    DoubleEndedRange slice(int i, int j) {
-
-    return r.slice(r.length() - j,
-
-    r.length() - i);
-
-    }
-
-    }
-
-    static if (hasLength(DoubleEndedRange)) {
-
-    unsigned length() {
-
-    return r.length();
-
-    }
-
-    }
-
-    }
-
-    I used the CDJ\#++ construct static if as an optional declaration:
-    If the tested condition is true, then the guarded code is compiled
-    in; otherwise, it just vanishes. The predicates hasLength and
-    isRandomAccess use introspection to figure out during compilation
-    whether the original range offers length and random access,
-    respectively. Note how DoubleEndedRange also may or may not define
-    length, depending on whether r does.
-
-    This kind of optionally enriched interface depending on the type of
-    the input puts a great strain on the language\'s static
-    introspection mechanisms. I don\'t know of a way to do that in Java
-    or C\#, and in C++ things can be done, albeit with difficulty. In D,
-    the static if construct exists and makes it easy to define
-    isRandomAccess and hasLength. If your target language is dynamic,
-    there should be no problem to use dynamic reflection to allow
-    clients to discover the capabilities of a range object.
-
-    If static introspection is available, a host of really cool stuff
-    can be done. For example, if Retro is composed with itself (e.g.,
-    Retro\&lt;Retro\&lt;SomeRange\&gt;\&gt;), why do all the busywork? The entire
-    construct should statically boil down to SomeRange at exactly zero
-    computational cost.
-
--   Chain**.** One particularly interesting higher-order range is Chain,
-    &gt; which takes two or more ranges, possibly of different categories,
-    &gt; and offers a logically contiguous view of those ranges. Then,
-    &gt; Chain can be used whenever one single range is expected; the user
-    &gt; of Chain has no idea that iteration segues from one range to
-    &gt; another. The capabilities of Chain are naturally the intersection
-    &gt; of all capabilities of its inputs. For example, for Chain to
-    &gt; define length, all of its contained ranges must also define
-    &gt; length. If all contained ranges offer random access *and* length,
-    &gt; then Chain offers random access as well. In that case, accessing
-    &gt; the *n*th element of a Chain is proportional to the number of
-    &gt; ranges that the Chain iterates (which could become a complexity
-    &gt; threat if the number of ranges is large). With Chain, quite
-    &gt; interesting operations become possible. For example, sort(Chain(a,
-    &gt; b, c)) sorts a logical array that has three physical arrays as
-    &gt; support. Although iteration over Chain is in a sense lazy because
-    &gt; it doesn\'t create a contiguous copy of the three arrays, sort
-    &gt; itself is not lazy---after it returns, all elements of the three
-    &gt; arrays are arranged in sorted order.
-
-Three-Legged Algorithms {#three-legged-algorithms .list-paragraph}
------------------------
-
-Several algorithms in STL use three iterators: one for the beginning of input, one for the middle, and one for the end. For example, consider STL\'s nth\_element and rotate, with the following (stylized)
-signatures:
-
 </code></pre>
-<p>void nth_element(RIt first, RIt mid, RIt last);
-void rotate(FIt first, FIt mid, FIt last);</p>
-<pre><code>
-where RIt is a random access iterator and FIt is a forward iterator. mid must fall somewhere between first and last. nth\_element is a useful algorithm that moves the smallest mid - first elements of the range
-toward the beginning, and makes mid point to exactly the (mid - first)-smallest element in the range. The trick is that nth\_element does not sort anything---it just finds the *n*th smallest element (hence
-its name). Sorting the range and then looking at mid would achieve the same result, but nth\_element does considerably less work than sort, important when handling large data sets. (nth\_element is used in index
-searching and nearest-neighbors algorithms.)
-
-rotate is one of my favorites but has a rather arcane name. It rearranges elements in the range (using standard math interval notation) \[first, last) such that the elements in \[mid, last) appear before the
-elements in \[first, mid). Put another way, rotate is a bring-to-front operation: The \[mid, last) portion is brought to the front of the range. Naively implemented, rotate could take a long time, but the
-algorithm is quite clever about minimizing data moves.  **NOTE**
-
-I happen to think that bring\_to\_front would be a much more intuitive
-name than rotate.
-
-How can such functions be translated into range lingo? This was quite a conundrum that had me thinking for quite a while, until I realized a simple fact: Three-legged algorithms conceptually do *not* take three
-iterators. They take two *ranges*, left and right! The left-hand range is \[first, mid), and the right-hand one is \[mid, last). Armed with this simple fact, I first defined and implemented nth\_element and
-rotate as follows:
-
-```cpp
-void nth_element(RR left, RR right);
+<p>The GoF interface is naturally more robust without necessarily losing efficiency. The conceptual gain is that the limits are now an indivisible unit presenting a higher-level and safer interface.</p>
+<p>For some uses, GoF-style iterators can be just as efficient as iterators, though they sometimes suffer a little in the comparison. For example, the tests for IsDone are just as efficient as with iterators.
+However, an ArrayIterator is twice the size of an STL iterator, which can be a significant overhead if the iterator is used to refer to a single container element. (For example, consider a large array and a
+bunch of iterators referring to elements in it.) Yet in many cases, STL iterators must be used in pairs anyway, and for such cases there is no overhead at all.</p>
+<p>On the other hand, the STL has effectively demonstrated that iteration is about more than just IsDone, Next, and CurrentItem. Let's adopt and improve on both the STL's and the GoF iterator ideas to get an
+efficient, flexible, simple, and highly useful iterator. Instead of building upon pointers as the fundamental abstraction, as does the STL, it's better to start with the GoF approach. This allows the iterator
+type to be smarter and safer without losing efficiency, at least in most use cases. The iterator categories in the STL are highly useful, so let's keep them. As the previous example shows, the new iterator must
+know its limits---the beginning and end of its range. Therefore, the name of this new candidate abstraction shall be &quot;range,&quot; and its refinements---input, output, forward, double-ended, and random access,
+if not others---&quot;categories.&quot;</p>
+<h3>Separating Access from Traversal</h3>
+<p>This article is concerned with traversal more than access, but the proposal by Abrahams et al. (discussed in the section &quot;Traversal and Access&quot;) is compelling. Let's take one simple abstraction step that
+allows us to benefit from the separation, without needing to discuss access details in great detail: We encapsulate the access category of ranges as a type called Ref&lt;T&gt;, where T is the native type of the
+range. Ref&lt;T&gt; is a type that may simply be a synonym for T, or for reference-to-T, but can also be a proxy to a T allowing some or all of read, write, swap, and address taking. Essentially Ref&lt;T&gt; is a
+wildcard that could fulfill any of the categories in <a href="https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg">Figure 2</a>.  The range categories we discuss below may be parameterized with Ref in
+addition to T.</p>
+<h3>One-Pass Ranges</h3>
+<p>Let's start with input from a sequential stream, such as reading one keystroke at a time from the keyboard, reading a network packet, or using C's fgetc API. For these, we can easily adapt the
+IsDone/CurrentItem/Next troika: IsDone checks for end-of-input and fills a one-element buffer held inside the range object, CurrentItem returns the buffer, and Next sets an internal flag that tells IsDone to read the
+next element when called. Let's define the one-pass interface and also take the opportunity to change the names of the primitives. (As you'll soon see, the new names scale better when we extend the interface.)</p>
+<p>interface OnePassRange {</p>
+<p>bool empty();</p>
+<p>Ref&lt;T&gt; front();</p>
+<p>void popFront();</p>
+<p>}</p>
+<p>The use of &quot;interface&quot; above is informal. Depending on your language of choice, you could use explicit interfaces but also implicit interfaces and duck typing <sup class="footnote-ref"><a href="#fn10" id="fnref10">10</a></sup> (e.g., &quot;If it has empty, front, and
+popFront then it's an input range&quot;).</p>
+<p>To use OnePassRange, you'd write a loop along the following lines:</p>
+<p>OnePassRange r = ...;</p>
+<p>for (; !r.empty(); r.popFront()) {</p>
+<p>... use r.front() ...</p>
+<p>}</p>
+<p>With input ranges, we can already define some pretty neat algorithms, such as the functional powerhouses map and reduce. To keep things simple, let's take a look at the find algorithm:</p>
+<p>OnePassRange find(OnePassRange r, T value) {</p>
+<p>for (; !r.empty(); r.popFront()) {</p>
+<p>if (r.front() == value) break;</p>
+<p>}</p>
+<p>return r;</p>
+<p>}</p>
+<p>find has a very simple specification---it advances the passed-in range until it finds the value, or until the range is exhausted. It returns the balance of the range starting with the found value.</p>
+<p>Note that one-pass ranges allow output as well as input---it's up to whichever Ref&lt;T&gt; you use to allow reading, writing, or both. If we denote a writable onepass range with WOnePassRange, we can define the
+copy algorithm like this:</p>
+<p>WOnePassRange copy(</p>
+<p>OnePassRange src, WOnePassRange tgt) {</p>
+<p>for (; !src.empty();</p>
+<p>src.popFront(), tgt.popFront()) {</p>
+<p>assert(!tgt.empty());</p>
+<p>tgt.front() = src.front();</p>
+<p>}</p>
+<p>return tgt;</p>
+<p>}</p>
+<p>The copy function returns the balance of the target range, which allows you to continue copying in it.</p>
+<h3>Forward Ranges</h3>
+<p>Forward ranges are most similar to what functional languages and GoF iterators implement: strictly forward iteration over an in-memory entity.</p>
+<p>interface ForwardRange : OnePassRange {</p>
+<p>ForwardRange save();</p>
+<p>}</p>
+<p>ForwardRange defines all of OnePassRange's primitives plus save, which returns a snapshot of the iteration state.</p>
+<p>Why is just a regular copy not enough?</p>
+<p>void fun(ForwardRange r) {</p>
+<p>ForwardRange lookIMadeACopy = r;</p>
+<p>...</p>
+<p>}</p>
+<p>The save method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all---it's an alias, another reference to the same underlying Range object. Copying
+the actual object requires a method call. Second, in a language with value semantics, like C++, there's no distinction between copying to pass an argument to a function and copying to save a snapshot of the
+range. Calling save makes that syntactically obvious. (This solves a problem that plagues the STL's forward and input iterators, which are syntactically indistinguishable while semantically distinct---a
+perennial source of trouble.)</p>
+<p>Using the forward range interface, we can define a host of interesting algorithms. To get an idea of what range-based algorithms would look like, consider defining a function findAdjacent that advances through a
+range until its first and second elements are equal:</p>
+<p>ForwardRange findAdjacent(ForwardRange r){</p>
+<p>if (!r.empty()) {</p>
+<p>auto s = r.save();</p>
+<p>s.popFront();</p>
+<p>for (; !s.empty();</p>
+<p>r.popFront(), s.popFront()) {</p>
+<p>if (r.front() == s.front()) break;</p>
+<p>}</p>
+<p>}</p>
+<p>return r;</p>
+<p>}</p>
+<p>After auto s = r.save(); the ranges s and r are considered independent.  If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don't have a save method. If
+ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because r.front() is
+trivially equal to s.front() when r and s are actually tied together.)</p>
+<h3>Double-Ended Ranges</h3>
+<p>The next step of range specialization is to define double-ended ranges, characterized by two extra methods, back and popBack, corresponding to front and popFront for forward iteration:</p>
+<p>interface DoubleEndedRange : ForwardRange {</p>
+<p>Ref&lt;T&gt; back();</p>
+<p>void popBack();</p>
+<p>}</p>
+<p>Let's try our hand at the reverse algorithm, which reverses a swappable double-ended range in place.</p>
+<p>void reverse(DoubleEndedRange r) {</p>
+<p>while (!r.empty()) {</p>
+<p>swap(r.front(), r.back());</p>
+<p>r.popFront();</p>
+<p>if (r.empty()) break;</p>
+<p>r.popBack();</p>
+<p>}</p>
+<p>}</p>
+<p>Easy as pie. We can define not only algorithms that use ranges, but also new ranges, which is very useful. For example, defining a range Retro that walks a double-ended range backwards is a simple matter of
+cross-wiring front with back and popFront with popBack:</p>
+<p>struct Retro&lt;DoubleEndedRange&gt; {</p>
+<p>private DoubleEndedRange r;</p>
+<p>bool empty() { return r.empty(); }</p>
+<p>Ref&lt;T&gt; front() { return r.back(); }</p>
+<p>void popFront() { r.popBack(); }</p>
+<p>Ref&lt;T&gt; back() { return r.front(); }</p>
+<p>void popBack() { r.popFront(); }</p>
+<p>}</p>
+<p><strong>NOTE</strong></p>
+<p>The name &quot;retro&quot; is not quite fitting, but the more correct &quot;reverser&quot; seemed forced.</p>
+<h3>Random Access Ranges</h3>
+<p>The most powerful range of all, the random access range, adds constant-time indexed access in addition to the single-ended range primitives. This category of range notably covers contiguous arrays but
+also noncontiguous structures such as STL's deque. The random access interface offers all of ForwardRange's primitives, plus two random access primitives, at and slice. at fetches an element given the index,
+and slice produces a subrange lying between two indices.</p>
+<p>interface RandomAccessRange : ForwardRange {</p>
+<p>Ref&lt;T&gt; at(int i);</p>
+<p>RandomAccessRange slice(int i, int j);</p>
+<p>}</p>
+<p>A startling detail is that RandomAccessRange extends ForwardRange, not DoubleEndedRange. What's happening? Infiniteness, that's what happens.  Consider a simple range that yields numbers modulo 10: 0, 1, 2, ..., 9,
+0, 1, .... Given an index, it's easy to compute the corresponding series element, so the range is rightfully a RandomAccessRange. But this range does not have a &quot;last&quot; element, so it cannot define
+DoubleEndedRange's primitives. So a random access range extends different concepts, depending on its finiteness.</p>
+<p>Many algorithms require constant-time slicing. Consider quicksort as an example: it cannot select a good pivot (ahem) unless it has constant-time random access, and then it needs constant-time slicing to
+divide the input in two at a randomly chosen point.</p>
+<p><a href="https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig03.jpg">Figure 3</a>
+shows the proposed conceptual hierarchy for ranges.</p>
+<p><img src="./images_on_iterators//media/image3.png" alt="" />{width=&quot;4.267361111111111in&quot; height=&quot;2.48125in&quot;}</p>
+<p><a href="">Figure 3</a>
+The proposed Range concept hierarchy.</p>
+<h2>Experience with Ranges</h2>
+<p>One very good question is this: Are ranges as defined above expressive enough to allow implementing, for example, all of STL? How about more than that? Clearly iterators, being a lower-level abstraction, can be
+used to do things ranges cannot. However, my experience suggests that the loss of expressiveness is minimal and easily outweighed by the advantages of the high-level abstraction and safety of ranges.</p>
+<p>I didn't know how to prove that ranges are sufficiently expressive. All I could do was to spin some code. As mentioned in the introduction, I've implemented D's standard algorithms <sup class="footnote-ref"><a href="#fn5" id="fnref5">5</a></sup> entirely in terms of
+ranges. D's library includes all of STL's functionality, and after gaining courage I added quite a few extra algorithms and ranges to it.  The following summarizes my experience with ranges while doing that
+work.</p>
+<h2>Optional Range Capabilities</h2>
+<p>The range API defined so far is surprisingly capable, allowing the implementation of many algorithms in a container-independent manner.  However, some useful primitives are conspicuously absent. For example,
+most random access ranges and some of the others support a notion of length. The length of a range can be computed easily for even an input range by simply walking it to exhaustion, but certain containers
+naturally support constant-time length as a primitive.</p>
+<p>Interestingly, length is not restricted to a specific range category.  One might suppose that random access ranges must have a length, whereas others don't. However, there are random access ranges that don't have
+a length. Infinite ranges (such as the range of numbers modulo 10 discussed above in the section &quot;Random Access Ranges&quot;) are an obvious example, but there are more subtle cases. Consider, for example, a
+circular buffer implemented atop an array. You can access the ith element in constant time---it's the (i % n)th element of the array.  Claiming that the length of the buffer itself is n may, however,
+surprise clients: They'd expect that taking n steps would take them to the end of the sequence, but that doesn't happen. Conversely, there are even input ranges that have a length---for example, a range that yields
+100 random numbers.</p>
+<p>So length is an optional attribute. If the range can define it, it should, but it's never obligated to do so. A range-based algorithm may or may not require that length be defined by its range parameters.</p>
+<p>Infiniteness is another property that turned out to be quite useful in practice. An infinite forward range would always return false from empty(). Detecting that is difficult in most languages, so a separate
+Boolean property or trait isInfinite could be provided. I don't think infiniteness is an essential component of a range API, but it was very easy to define in D with no additional effort, and sometimes comes in
+quite handy. There is also a relationship (briefly alluded to in the section &quot;Random Access Ranges&quot;) between random access ranges, double-ended ranges, and infiniteness: If a random access range is
+infinite, it extends a forward range. Otherwise, it extends a double-ended range.</p>
+<p>Other, more exotic range capabilities are primitives such as lookahead or putback. An input range may have a lookahead capability up to a specified number of elements and/or the feature of allowing an element
+to be returned to the range. C's sequential file API offers the ungetc function, which is guaranteed to work for at least one character. The primitives lookahead and putback are useful in a variety of
+applications, particularly those concerned with parsing streams.</p>
+<h2>Higher-Order Ranges</h2>
+<p>In keeping with higher-order functions that take and return other functions, a higher-order range is one that aggregates and manipulates other ranges, while itself still offering a range interface. Building
+ranges that decorate other ranges is easy, useful, and fun. In fact, higher-order ranges fulfill the promise that many saw in the early days of the STL. Back then, people thought custom iterators would solve many
+problems, and consequently defined quite a few of them. The idea, however, has had limited success. I'm not sure why, but I hypothesize that the difficulties of defining iterators and the verboseness of using
+them were possible factors.</p>
+<p>Ranges, by contrast, are very easy to define and use. The result of many algorithms are, in fact, custom ranges. Consider, for example, the classic higher-order function filter, which takes a range r plus a
+predicate, and returns a range that only offers the elements of r satisfying the predicate. The work that filter itself does is minimal---it merely constructs and returns a range type, call it Filter,
+that does the filtration in its iteration primitives.</p>
+<ul>
+<li><strong>Laziness.</strong> Higher-order ranges offer the opportunity of doing
+<blockquote>
+<p>computation lazily, in the style preferred by functional
+languages, instead of eagerly. Consider, for example, the STL
+algorithm set_union that takes two sorted ranges and yields one
+sorted range containing the elements of both ranges, in linear
+time. set_union is eager---when it returns, it has finished the
+job. This approach has two problems. First, you need to create
+(and possibly allocate memory for) the target range. This is
+wasteful of both memory and time if all you want to do is peek at
+each element of set_union in turn and maybe finish the loop
+without inspecting all elements. Second, eager set_union needs to
+read all of its input before finishing, which simply does not work
+with infinite ranges.</p>
+</blockquote>
+</li>
+</ul>
+<p>A classic argument in favor of lazy evaluation is that it leads to better modular composition. This is because lazy evaluation allows for much more involved compositions, with powerful generators that construct a large data space, out of which a selector chooses the
+items of interest. This advantage has been beautifully argued by Hughes <sup class="footnote-ref"><a href="#fn11" id="fnref11">11</a></sup> and is famously used by Google in its implementation of the MapReduce algorithm <sup class="footnote-ref"><a href="#fn12" id="fnref12">12</a></sup>. D's standard library uses lazy
+evaluation wherever possible, to great effect.</p>
+<ul>
+<li>
+<p><strong>Preserving Range Categories.</strong> Recall Retro, a range that</p>
+<blockquote>
+<p>traverses a given range backwards. Clearly the original range,
+call it r, must offer double-ended iteration. Question: If the
+original range offered random access, should Retro also offer
+random access? The answer is a resounding yes. As a rule, a
+higher-order range must offer the highest capability that it can,
+subject to what the original range can offer. So Retro should do
+something like this:</p>
+</blockquote>
+<p>struct Retro&lt;DoubleEndedRange&gt; {</p>
+<p>... as before ...</p>
+<p>static if (isRandomAccess(DoubleEndedRange)</p>
+<p>&amp;&amp; hasLength(DoubleEndedRange)) {</p>
+<p>Ref&lt;T&gt; at(unsigned i) {</p>
+<p>return r.at(r.length() - 1 - i);</p>
+<p>}</p>
+<p>DoubleEndedRange slice(int i, int j) {</p>
+<p>return r.slice(r.length() - j,</p>
+<p>r.length() - i);</p>
+<p>}</p>
+<p>}</p>
+<p>static if (hasLength(DoubleEndedRange)) {</p>
+<p>unsigned length() {</p>
+<p>return r.length();</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>I used the CDJ#++ construct static if as an optional declaration:
+If the tested condition is true, then the guarded code is compiled
+in; otherwise, it just vanishes. The predicates hasLength and
+isRandomAccess use introspection to figure out during compilation
+whether the original range offers length and random access,
+respectively. Note how DoubleEndedRange also may or may not define
+length, depending on whether r does.</p>
+<p>This kind of optionally enriched interface depending on the type of
+the input puts a great strain on the language's static
+introspection mechanisms. I don't know of a way to do that in Java
+or C#, and in C++ things can be done, albeit with difficulty. In D,
+the static if construct exists and makes it easy to define
+isRandomAccess and hasLength. If your target language is dynamic,
+there should be no problem to use dynamic reflection to allow
+clients to discover the capabilities of a range object.</p>
+<p>If static introspection is available, a host of really cool stuff
+can be done. For example, if Retro is composed with itself (e.g.,
+Retro&lt;Retro&lt;SomeRange&gt;&gt;), why do all the busywork? The entire
+construct should statically boil down to SomeRange at exactly zero
+computational cost.</p>
+</li>
+<li>
+<p>Chain**.** One particularly interesting higher-order range is Chain,</p>
+<blockquote>
+<p>which takes two or more ranges, possibly of different categories,
+and offers a logically contiguous view of those ranges. Then,
+Chain can be used whenever one single range is expected; the user
+of Chain has no idea that iteration segues from one range to
+another. The capabilities of Chain are naturally the intersection
+of all capabilities of its inputs. For example, for Chain to
+define length, all of its contained ranges must also define
+length. If all contained ranges offer random access <em>and</em> length,
+then Chain offers random access as well. In that case, accessing
+the <em>n</em>th element of a Chain is proportional to the number of
+ranges that the Chain iterates (which could become a complexity
+threat if the number of ranges is large). With Chain, quite
+interesting operations become possible. For example, sort(Chain(a,
+b, c)) sorts a logical array that has three physical arrays as
+support. Although iteration over Chain is in a sense lazy because
+it doesn't create a contiguous copy of the three arrays, sort
+itself is not lazy---after it returns, all elements of the three
+arrays are arranged in sorted order.</p>
+</blockquote>
+</li>
+</ul>
+<h2>Three-Legged Algorithms {#three-legged-algorithms .list-paragraph}</h2>
+<p>Several algorithms in STL use three iterators: one for the beginning of input, one for the middle, and one for the end. For example, consider STL's nth_element and rotate, with the following (stylized)
+signatures:</p>
+<pre><code>void nth_element(RIt first, RIt mid, RIt last);
+void rotate(FIt first, FIt mid, FIt last);
+</code></pre>
+<p>where RIt is a random access iterator and FIt is a forward iterator. mid must fall somewhere between first and last. nth_element is a useful algorithm that moves the smallest mid - first elements of the range
+toward the beginning, and makes mid point to exactly the (mid - first)-smallest element in the range. The trick is that nth_element does not sort anything---it just finds the <em>n</em>th smallest element (hence
+its name). Sorting the range and then looking at mid would achieve the same result, but nth_element does considerably less work than sort, important when handling large data sets. (nth_element is used in index
+searching and nearest-neighbors algorithms.)</p>
+<p>rotate is one of my favorites but has a rather arcane name. It rearranges elements in the range (using standard math interval notation) [first, last) such that the elements in [mid, last) appear before the
+elements in [first, mid). Put another way, rotate is a bring-to-front operation: The [mid, last) portion is brought to the front of the range. Naively implemented, rotate could take a long time, but the
+algorithm is quite clever about minimizing data moves.  <strong>NOTE</strong></p>
+<p>I happen to think that bring_to_front would be a much more intuitive
+name than rotate.</p>
+<p>How can such functions be translated into range lingo? This was quite a conundrum that had me thinking for quite a while, until I realized a simple fact: Three-legged algorithms conceptually do <em>not</em> take three
+iterators. They take two <em>ranges</em>, left and right! The left-hand range is [first, mid), and the right-hand one is [mid, last). Armed with this simple fact, I first defined and implemented nth_element and
+rotate as follows:</p>
+<pre><code class="language-cpp">void nth_element(RR left, RR right);
 void rotate(FR left, FR right);
 </code></pre>
 <p>where RR is a random access range and FR is a forward range. If you want
@@ -694,7 +529,7 @@ random access---an input range would suffice. The implementation of nth_element 
 but offers additional functionality.</p>
 <h2>Weaknesses</h2>
 <p>My (and many others') natural inclination when switching from STL iterators to ranges was to think of iterator-based designs in terms of ranges, just as I'd think of writing programs in a new language by
-using idioms popular in languages I already knew. This approach has revealed a few iterator-based designs that can't be translated easily to ranges. One example is Boost MultiIndex <sup class="footnote-ref"><a href="#fn10" id="fnref10">10</a></sup>, which stores
+using idioms popular in languages I already knew. This approach has revealed a few iterator-based designs that can't be translated easily to ranges. One example is Boost MultiIndex <sup class="footnote-ref"><a href="#fn13" id="fnref13">13</a></sup>, which stores
 iterators to containers in indexes. Storing one-element ranges instead doubles the size of the index.</p>
 <p>Another weakness I noticed is visible when translating STL algorithms that return one iterator, such as find, which has this signature:</p>
 <pre><code class="language-cpp">It find(It b, It e, E value)
@@ -757,7 +592,16 @@ its bricks, then architectural concerns, and finally present and future urban in
 <p>Thorsten Ottosen. <a href="http://boost.org/doc/libs/1_39_0/libs/range/">The Boost Range Library</a>. 2003. <a href="#fnref9" class="footnote-backref">↩</a></p>
 </li>
 <li id="fn10">
-<p>Joaquín M. López Muñoz. <a href="http://www.boost.org/doc/libs/1_40_0/libs/multi_index/doc/index.html">The Boost.MultiIndex Library</a>.  2003. <a href="#fnref10" class="footnote-backref">↩</a></p>
+<p>Andrew Koenig. &quot;<a href="http://www.ddj.com/cpp/184401971">Templates and Duck Typing</a>.&quot; <em>Dr. Dobb's Journal</em>, June 2005. . <a href="#fnref10" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn11">
+<p>John Hughes. &quot;<a href="http://www.cs.chalmers.se/~rjmh/Papers/whyfp.html">Why Functional Programming Matters</a>.&quot; <em>Comput.  J.</em>, 32(2):98--107, 1989. <a href="#fnref11" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn12">
+<p>Jeffrey Dean and Sanjay Ghemawat. &quot;Mapreduce: Simplified Data Processing on Large Clusters.&quot; <em>Commun. ACM</em>, 51(1):107--113, 2008. <a href="#fnref12" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn13">
+<p>Joaquín M. López Muñoz. <a href="http://www.boost.org/doc/libs/1_40_0/libs/multi_index/doc/index.html">The Boost.MultiIndex Library</a>.  2003. <a href="#fnref13" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>

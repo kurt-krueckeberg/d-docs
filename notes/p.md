@@ -35,20 +35,20 @@ qsort (x:xs) = qsort (filter (< x) xs) ++ [x]
 ```
 
 Code like the above has been used up and down the tubes to demonstrate the superiority of functional languages. It\'s a functional-style quicksort written in Haskell that can be understood, at least according
-to some, without any prior exposure. First line: `qsort` of the empty list is the empty list. Second line (broken to fit in a narrow space): `qsort` for a list starting with x followed by some more `xs` is a concatenation
-(\'++\') of three lists: all stuff in xs that\'s smaller than x sorted, x itself, and all stuff in xs that\'s greater than or equal to x, again sorted. Try defining quicksort in two lines in your Blub language!
+to some, without any prior exposure. First line: `qsort` of the empty list is the empty list. Second line (broken to fit in a narrow space): `qsort` for a list starting with `x` followed by some more `xs` is a concatenation
+(\'++\') of three lists: all stuff in xs that\'s smaller than `x` sorted, `x` itself, and all stuff in xs that\'s greater than or equal to x, again sorted. Try defining quicksort in two lines in your Blub language!
 
 As much as I like Haskell, I look at that example with a mix of admiration and indignation, same as I\'d look at an example illustrating C\'s virtues by means of a buffer overrun exploit. Both cases inspire
 awe, but I think they illustrate something bad rather than something good, and I could never bring myself to write or use that kind of trick.
 
-There are a few things about qsort that don\'t quite cut the mustard.  For starters, qsort is not really quicksort. Quicksort, as defined by Hoare in his seminal paper [^8], is an *in-place* algorithm. Hoare\'s
-in-place partition is his paper\'s main contribution and a quintessential part of quicksort. qsort is not in-place, so it could be at best considered an exercise inspired by quicksort. (And not a great
-exercise at that. It does so much ancillary work it\'s not even funny---did you think that those two passes through the list and all those concatenations come for free?) Second, qsort makes a patently bad
+There are a few things about `qsort` that don\'t quite cut the mustard.  For starters, `qsort` is not really quicksort. Quicksort, as defined by Hoare in his seminal paper [^8], is an *in-place* algorithm. Hoare\'s
+in-place partition is his paper\'s main contribution and a quintessential part of quicksort. `qsort` is not in-place, so it could be at best considered an exercise inspired by quicksort. (And not a great
+exercise at that. It does so much ancillary work it\'s not even funny---did you think that those two passes through the list and all those concatenations come for free?) Second, `qsort` makes a patently bad
 choice of pivot by selecting the first element of the sequence, thus nicely guaranteeing quadratic performance for almost sorted data. And the thing is, in reality, input data is seldom really random. It might
-have been sorted at some point, then augmented with additional elements, to be sorted again later. Choosing a random pivot is the correct solution, but you see, that would make qsort quite a lot longer than
+have been sorted at some point, then augmented with additional elements, to be sorted again later. Choosing a random pivot is the correct solution, but you see, that would make `qsort` quite a lot longer than
 three lines, because selecting one element at random from a singly-linked list is a non-trivial undertaking.
 
-This finally brings me to the third issue I have with qsort, and to the subject of this article: qsort sends a subtler message: Singly-linked lists and forward iteration are everything you need. They aren\'t, and
+This finally brings me to the third issue I have with qsort, and to the subject of this article: `qsort` sends a subtler message: Singly-linked lists and forward iteration are everything you need. They aren\'t, and
 they shouldn\'t be made to seem like they are.
 
 Lisp has pioneered ubiquitous use of singly-linked lists (\"S-lists\").  S-lists connect together data and reference-to-next-element pairs in arbitrary shapes. In fact, S-lists enjoy the *closure* property [^1]
@@ -120,16 +120,13 @@ strategies. Some required forward iteration, others bidirectional iteration, som
 different categories of iterators. It\'s that there are only a *few* of them. You see, if 50 algorithms required 30 different categories of iterators, that design would be unwieldy. Conceptual categories are like
 function parameters: If there are too many of them, then probably something went wrong. STL has shown that a very generous collection of algorithms can be implemented with only five iterator categories:
 
--   *Input iterators*, modeling one-pass input such as reading from
-    > files or network streams
+-   *Input iterators*, modeling one-pass input such as reading from files or network streams
 
--   *Output iterators*, modeling one-pass output such as writing to
-    > sequential files or network streams
+-   *Output iterators*, modeling one-pass output such as writing to sequential files or network streams
 
 -   *Forward iterators*, modeling access to singly-linked lists
 
--   *Bidirectional iterators*, modeling access to doubly-linked lists
-    > and (somewhat unexpectedly) UTF-encoded strings
+-   *Bidirectional iterators*, modeling access to doubly-linked lists and (somewhat unexpectedly) UTF-encoded strings
 
 -   *Random access iterators*, modeling array access
 
@@ -137,7 +134,7 @@ The conceptual hierarchy of the five iterator categories is quite
 simple: input and output are the most primitive, and each of the more
 capable categories specializes the previous one, as shown in [Figure 1](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg).
 
-![](./images_on_iterators//media/image1.png){width="3.0069444444444446in" height="2.4340277777777777in"}
+![](./images_on_iterators//media/image1.png)
 
 [Figure 1](javascript:popUp('/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg'))
 The iterator concept hierarchy in STL.
@@ -188,22 +185,21 @@ additionally in a second hierarchy of categories. These new categories are ortho
 
 In brief:
 
--   **Readable iterators:** You can write value = \*iter.
+-   **Readable iterators:** You can write `value = *iter`.
 
--   **Writable iterators:** You can write \*iter = value.
+-   **Writable iterators:** You can write `*iter = value`.
 
--   **Swappable iterators:** You can write iter\_swap(iter1, iter2).
+-   **Swappable iterators:** You can write `iter_swap(iter1, iter2)`.
 
--   lvalue **iterators:** You can write address = &(\*iter); that is,
-    > you can take the address at which the iterated element lies in
-    > memory
+-   **lvalue iterators:** You can write address = `&(*iter);` that is,
+    you can take the address at which the iterated element lies in memory
 
 [Figure 2](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg)
 illustrates the relationships among these categories. Any of them can be combined with one classic category in [Figure 1](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg).
 For example, you could define and use a bidirectional swappable
 iterator.
 
-![](./images_on_iterators//media/image2.png){width="3.091666666666667in" height="2.0034722222222223in"}
+![](./images_on_iterators//media/image2.png)
 
 [Figure 2](javascript:popUp('/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg'))
 The iterator access hierarchy proposed for the STL by Abrahams et al. [^3] #### Lack of Safety
@@ -223,7 +219,7 @@ Various quirks of C++ make the task of defining and using iterators unduly diffi
 that [^2]. This in spite of the fact that an iterator really needs to define only three basic operations (compare, advance, and dereference).  Code using iterators can be pretty complex, too. For example, naysayers
 commonly bring up examples like this:
 
-```c++
+```cpp
 vector<int> v = ...;
 for (vector<int>::iterator i = v.begin(); i != v.end(); ++i) {
 ... use *i ...
@@ -240,17 +236,17 @@ In an attempt to improve iterator usage, Adobe [^4] and Boost [^12] independen
 logical collection (or stream). Then, algorithms can use a range whenever a pair of iterators is expected, which makes pairing errors both less likely and easier to spot. When calling an algorithm with
 ranges, you write:
 
-```c++
-vector\<int\> v;
-...
-
-*// implicitly take the \"all\" range of v*
-
+```cpp
+vector<int> v;
+//...snip
+// implicitly take the \"all\" range of v*
 sort(v);
-
+```
 instead of the customary:
 
+```cpp
 sort(v.begin(), v.end());
+```
 
 If you use algorithms a lot, such ranges will simplify much of your code. Composition with ranges is significantly easier, too. Although these improvements are not insignificant, Adobe/Boost ranges can\'t
 address all of the deficiencies in the STL\'s design.
@@ -277,41 +273,34 @@ A Fresh Approach to Iteration
 Notice that GoF iterators are not subject to many of the safety issues of STL iterators. You don\'t need two GoF iterators to iterate over a collection, so pairing-related errors are avoided by design. Also, it is
 quite easy to implement some minimal checking inside the primitives IsDone, Next, and CurrentItem, as shown below for a hypothetical iterator over an array holding objects of type T.
 
+```cpp
 class ArrayIterator {
 
-public:
-
-bool IsDone() {
-
-assert(begin \<= end);
-
-return begin == end;
-
+   public:
+   
+      bool IsDone()
+      {
+      assert(begin \<= end);
+      return begin == end;
+      }
+      
+      void Next()
+      {
+      assert(!IsDone());
+      ++begin;
+      }
+      
+      T CurrentItem()
+      {
+      assert(!IsDone());
+      return \*begin;
+      }
+      
+      private:
+      T* begin;
+      T* end;
 }
-
-void Next() {
-
-assert(!IsDone());
-
-++begin;
-
-}
-
-T CurrentItem() {
-
-assert(!IsDone());
-
-return \*begin;
-
-}
-
-private:
-
-T\* begin;
-
-T\* end;
-
-}
+```
 
 The GoF interface is naturally more robust without necessarily losing efficiency. The conceptual gain is that the limits are now an indivisible unit presenting a higher-level and safer interface.
 

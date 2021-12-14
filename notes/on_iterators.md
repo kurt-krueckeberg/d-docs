@@ -277,28 +277,23 @@ quite easy to implement some minimal checking inside the primitives IsDone, Next
 
 ```cpp
 class ArrayIterator {
-
    public:
-   
       bool IsDone()
       {
          assert(begin \<= end);
          return begin == end;
       }
-      
       void Next()
       {
          assert(!IsDone());
          ++begin;
       }
-      
       T CurrentItem()
       {
          assert(!IsDone());
          return \*begin;
       }
-      
-      private:
+    private:
       T* begin;
       T* end;
 }

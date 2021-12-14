@@ -1,5 +1,4 @@
-Executive Summary
------------------
+## Executive Summary
 
 Lisp pioneered forward iteration using singly-linked lists. Later object-oriented container designs often used the Iterator design pattern to offer sequential access using iterators. Though iterators are safe
 and sensible, their interface prevents definition of flexible, general, and efficient container-independent algorithms. For example, you can\'t reasonably expect to sort, organize as a binary heap, or even reverse a
@@ -9,8 +8,7 @@ superset of STL\'s algorithms in the D language\'s standard library.
 
 This article is rather long because I\'m attempting not to alienate those unfamiliar with the Standard Template Library, the Iterator design pattern, or functional languages.
 
-Introduction
-------------
+## Introduction
 
 This article provides a fresh perspective on iteration. I will discuss several typical incarnations of iteration as found in today\'s programming languages, and in particular I\'ll restate the argument
 (originally made by Alexander Stepanov [^13]) that if you want to define general algorithms, forward iteration does not suffice. Then I will propose a new approach to iteration that builds on the strengths of
@@ -23,8 +21,7 @@ difficult to use as the C++ original, despite my benefiting from hindsight and a
 I threw away that first attempt and started a second design that attempted to generalize not starting from pointers (as STL does) and not from streams or singly-linked lists (as other languages do), but instead
 from higher-level notions. What came out of that attempt was so fresh, simple, and beautiful that I felt compelled to share it.
 
-Forward Is Not Enough
----------------------
+## Forward Is Not Enough
 
 You know what I don\'t like? Emperors clad in boxers. Consider:
 
@@ -43,7 +40,7 @@ awe, but I think they illustrate something bad rather than something good, and I
 
 There are a few things about `qsort` that don\'t quite cut the mustard.  For starters, `qsort` is not really quicksort. Quicksort, as defined by Hoare in his seminal paper [^8], is an *in-place* algorithm. Hoare\'s
 in-place partition is his paper\'s main contribution and a quintessential part of quicksort. `qsort` is not in-place, so it could be at best considered an exercise inspired by quicksort. (And not a great
-exercise at that. It does so much ancillary work it\'s not even funny---did you think that those two passes through the list and all those concatenations come for free?) Second, `qsort` makes a patently bad
+exercise at that. It does so much ancillary work it\'s not even funny&mdash;did you think that those two passes through the list and all those concatenations come for free?) Second, `qsort` makes a patently bad
 choice of pivot by selecting the first element of the sequence, thus nicely guaranteeing quadratic performance for almost sorted data. And the thing is, in reality, input data is seldom really random. It might
 have been sorted at some point, then augmented with additional elements, to be sorted again later. Choosing a random pivot is the correct solution, but you see, that would make `qsort` quite a lot longer than
 three lines, because selecting one element at random from a singly-linked list is a non-trivial undertaking.
@@ -53,11 +50,11 @@ they shouldn\'t be made to seem like they are.
 
 Lisp has pioneered ubiquitous use of singly-linked lists (\"S-lists\").  S-lists connect together data and reference-to-next-element pairs in arbitrary shapes. In fact, S-lists enjoy the *closure* property [^1]
 (not to be confused with function closures), meaning that they can represent any data structure, no matter how complex, by encoding it as directed graphs. That seems quite powerful, were it not for the
-unfortunate addendum---at a potential polynomial blowup in algorithmic complexity.
+unfortunate addendum&mdash;at a potential polynomial blowup in algorithmic complexity.
 
 Such matters as a polynomial slowdown were too mundane to hinder the power of S-lists, so some functional programmers got imbued with an attitude of contempt toward arrays and associative arrays, data
 structures essential to many algorithms. Lisp and other functional languages do offer arrays, but almost invariably as second-class citizens that don\'t enjoy the level of language support that S-lists
-do. I\'ve read many texts on functional languages and also written quite a bit of functional code, and I noticed a pattern---a lot of designers go with linear search at the core of the core algorithms without so much
+do. I\'ve read many texts on functional languages and also written quite a bit of functional code, and I noticed a pattern&mdash;a lot of designers go with linear search at the core of the core algorithms without so much
 as thinking about it. In fact, \"Structure and Interpretation of Computer Programs\" [^1], a highly revered Scheme-based programming textbook (and one of my personal favorites) uses linear search wherever
 anything is to be searched, and only bothers to mention arrays once, specifically to note that arrays do *not* enjoy the closure property, so they are not worthwhile.
 
@@ -66,8 +63,7 @@ singly-linked lists and relative neglect of arrays and associative arrays are we
 
 Unfortunately, iteration restricted to forward access, stilted as it is, has propagated into the object era.
 
-The Gang of Four (GoF) Iterator
--------------------------------
+## The Gang of Four (GoF) Iterator
 
 The Iterator design pattern prescribes interfaces for accessing container elements. \"Sequential\" is right in the charter of the Iterator pattern as defined in the classic Gang of Four (GoF) book
 [Design Patterns: Elements of Reusable Object-Oriented Software](http://www.informit.com/store/product.aspx?isbn=0201633612) [^7]:
@@ -89,16 +85,15 @@ interface Iterator {
 }
 ```
 
-Many of today\'s object-oriented libraries follow this mold. Some drop the First method in favor of a more general method---called ``Clone``, for
-example---which returns another Iterator: If you want to save iteration bread crumbs as you move along, you can just create independent copies
+Many of today\'s object-oriented libraries follow this mold. Some drop the First method in favor of a more general method&mdash;called ``Clone``, for
+example&mdash;which returns another Iterator: If you want to save iteration bread crumbs as you move along, you can just create independent copies
 of the Iterator object and store them in separate variables. This is more general than just restarting iteration from the first element with ``First()``.
 
 In brief, functional languages and object-oriented languages foster distinct iteration styles. The two styles have some differences, but both focus on forward iteration. Focusing on forward iteration may blind
 us to the necessity of backward or random access iteration. Going backward through a container using its GoF-style iterator is virtually impossible unless you take the hit of copying the whole thing first. And
 this could have been as good as it gets, had the STL not come about.
 
-STL-Style Iteration
--------------------
+## STL-Style Iteration
 
 At the 1968 Olympics, Dick Fosbury took the athletics world by surprise with an unusual high-jump technique. Instead of using any of the known jumping styles, he jumped arching his back and facing the sky.
 Fosbury\'s style was so surprising, an ad hoc committee was formed to determine the legitimacy of its use in the competition. The committee authorized Fosbury\'s jumping style, and he went on to win the gold
@@ -149,7 +144,7 @@ iterator, you simply assign iter to another variable. Finally, to determine when
 a C++ iterator does not know when it has exhausted the range, just as a pointer traversing an array has no knowledge of the extent of the array.
 
 Bidirectional iterators also define \--iter allowing you to move one position to the left, and random access iterators define addition of an integer (e.g., iter = iter + 5), indexed access (e.g., iter[^5]), and
-distance between iterators (e.g., int to\_go = end - iter). Thanks to this setup, built-in pointers enjoyed random access iterator status---the most powerful of all---by default, without having to do
+distance between iterators (e.g., int to\_go = end - iter). Thanks to this setup, built-in pointers enjoyed random access iterator status&mdash;the most powerful of all&mdash;by default, without having to do
 anything. If you were a pointer, you were born into RandomAccessIterator royalty.
 
 All of the above primitives take constant time. It would be possible to make iter += n work with a non-random iterator by evaluating ++iter n times, but that would take *O*(*n*) time, which in turn would wreak
@@ -158,13 +153,13 @@ havoc with algorithms that rely on iter += n as a constant-time primitive.
 STL\'s adoption of pointer-like syntax and semantics, as opposed to the traditional approach using named interface functions, was a brilliant strategic move helping rapid adoption of the library. STL algorithms
 worked with pointers straight out of the box, so they could be used with existing arrays without much fuss. Even better, code that used iterators looked like nicely crafted code using pointers, so people could easily
 relate to such code and write more of it. It all made so much sense that the usually conservative ANSI/ISO standardization committee serendipitously decided to integrate STL into C++98 without the usual
-lengthy committee process---and the rest, as they say, is history. To many people, STL is one of the finest libraries of containers and algorithms around. That the STL achieved such a feat in a language
+lengthy committee process&mdash;and the rest, as they say, is history. To many people, STL is one of the finest libraries of containers and algorithms around. That the STL achieved such a feat in a language
 lacking support for Lambda functions is akin to a boxer, one arm tied behind his back, beating the champion of a heavier weight class.
 
 ### Problems with STL Iterators
 
-Time has passed, experience with the STL has grown, and people naturally started seeing issues with it and looking into ways to improve it.  STL\'s quest---that of defining the most general and most widely
-applicable definitions of algorithms---has remained as worthy as ever, but it became increasingly clear that there may be more than one path to that goal.
+Time has passed, experience with the STL has grown, and people naturally started seeing issues with it and looking into ways to improve it.  STL\'s quest&mdash;that of defining the most general and most widely
+applicable definitions of algorithms&mdash;has remained as worthy as ever, but it became increasingly clear that there may be more than one path to that goal.
 
 #### Ad Hoc Pairing
 
@@ -208,10 +203,10 @@ The iterator access hierarchy proposed for the STL by Abrahams et al. [^3]
 
 STL iterators are unsafe in several ways. Correct pairing of iterators bracketing a range is left entirely to the user, and wrong pairings are easy to produce and expensive to check. It\'s also expensive to check
 against advancing an iterator beyond a range\'s bounds. In fact, none of iterator\'s primitives naturally support checking. Why? Because iterators are modeled after pointers, and pointers are *also* not
-naturally checkable. (Iterators also have invalidation problems---when a container changes, it may pull the rug out from under the iterators currently referring to elements of that container, but that is less of
+naturally checkable. (Iterators also have invalidation problems&mdash;when a container changes, it may pull the rug out from under the iterators currently referring to elements of that container, but that is less of
 an iterator interface issue and more of a memory model issue.)
 
-\"Safe\" STL implementations painstakingly address safety issues by implementing an alternative design based on \"fat iterators\"---pairs of iterators---to then emulate ordinary STL iterators. Such implementations
+\"Safe\" STL implementations painstakingly address safety issues by implementing an alternative design based on \"fat iterators\"---pairs of iterators&mdash;to then emulate ordinary STL iterators. Such implementations
 are in fact mute witnesses that the abstractions from pointers come with pointers\' specific problems. It would be desirable to have a design that does not need expensive logic and data to provide even a minimal
 level of checking.
 
@@ -232,7 +227,7 @@ for (vector<int>::iterator i = v.begin(); i != v.end(); ++i) {
 which is syntactically noisier than old-style iteration using an index, or even than the name-based GoF-style iteration. (I am not under the illusion that for\_each fixes that problem, and please don\'t send me
 angry email about this.)
 
-There are quite a few other iterator-related annoyances of increasing subtlety. Input and forward iterators are syntactically identical but subtly different semantically---copying a forward iterator saves
+There are quite a few other iterator-related annoyances of increasing subtlety. Input and forward iterators are syntactically identical but subtly different semantically&mdash;copying a forward iterator saves
 iteration state, but copying an input iterator just creates a new view of the same iteration state. This makes for more puzzling runtime errors.
 
 In an attempt to improve iterator usage, Adobe [^4] and Boost [^12] independently defined an abstraction called *range* that pairs two iterators together. Of course, the iterators must belong to the same
@@ -253,8 +248,8 @@ sort(v.begin(), v.end());
 If you use algorithms a lot, such ranges will simplify much of your code. Composition with ranges is significantly easier, too. Although these improvements are not insignificant, Adobe/Boost ranges can\'t
 address all of the deficiencies in the STL\'s design.
 
-One subtle problem with STL generalizing C++ pointers---if you allow me a little speculation---is that its detailed design is inextricably tied to C++. That makes STL difficult to understand without actually knowing
-C++ to a good bit of depth; the putative newcomer who wants to get the gist of the STL without absorbing C++ will meet a wall of detail---some important, much incidental---that is liable to discourage further study.
+One subtle problem with STL generalizing C++ pointers&mdash;if you allow me a little speculation&mdash;is that its detailed design is inextricably tied to C++. That makes STL difficult to understand without actually knowing
+C++ to a good bit of depth; the putative newcomer who wants to get the gist of the STL without absorbing C++ will meet a wall of detail&mdash;some important, much incidental&mdash;that is liable to discourage further study.
 To this day, the STL is unfortunately still provincial: although revered among C++ programmers, it is virtually absent from the larger programming community. Even languages that came to the fore after the
 STL continue to obsess with perfecting the obsolete \"straddle\" high-jump technique. Why? I think it\'s not impossible that the authors of those languages or APIs thumbed with puzzlement through some STL
 examples, with this result: \"This is odd... We can do this already...  This is too verbose... Look at this one, it\'s just bizarre.... Aw, forget it. Let\'s just make Find a method of Array.\"
@@ -269,8 +264,7 @@ loosely, and makes pass-by-reference optional.
 
 If you are familiar with any of the aforementioned languages, you should have no trouble understanding what **CDJ#++**\'s constructs do, although translating some into a specific language may be difficult.
 
-A Fresh Approach to Iteration
------------------------------
+## A Fresh Approach to Iteration
 
 Notice that GoF iterators are not subject to many of the safety issues of STL iterators. You don\'t need two GoF iterators to iterate over a collection, so pairing-related errors are avoided by design. Also, it is
 quite easy to implement some minimal checking inside the primitives IsDone, Next, and CurrentItem, as shown below for a hypothetical iterator over an array holding objects of type T.
@@ -308,7 +302,7 @@ bunch of iterators referring to elements in it.) Yet in many cases, STL iterator
 On the other hand, the STL has effectively demonstrated that iteration is about more than just IsDone, Next, and CurrentItem. Let\'s adopt and improve on both the STL\'s and the GoF iterator ideas to get an
 efficient, flexible, simple, and highly useful iterator. Instead of building upon pointers as the fundamental abstraction, as does the STL, it\'s better to start with the GoF approach. This allows the iterator
 type to be smarter and safer without losing efficiency, at least in most use cases. The iterator categories in the STL are highly useful, so let\'s keep them. As the previous example shows, the new iterator must
-know its limits---the beginning and end of its range. Therefore, the name of this new candidate abstraction shall be \"range,\" and its refinements---input, output, forward, double-ended, and random access,
+know its limits&mdash;the beginning and end of its range. Therefore, the name of this new candidate abstraction shall be \"range,\" and its refinements&mdash;input, output, forward, double-ended, and random access,
 if not others---\"categories.\"
 
 ### Separating Access from Traversal
@@ -359,9 +353,9 @@ OnePassRange find(OnePassRange r, T value)
 }
 ```
 
-find has a very simple specification---it advances the passed-in range until it finds the value, or until the range is exhausted. It returns the balance of the range starting with the found value.
+find has a very simple specification&mdash;it advances the passed-in range until it finds the value, or until the range is exhausted. It returns the balance of the range starting with the found value.
 
-Note that one-pass ranges allow output as well as input---it\'s up to whichever `Ref<T>` you use to allow reading, writing, or both. If we denote a writable onepass range with WOnePassRange, we can define the
+Note that one-pass ranges allow output as well as input&mdash;it\'s up to whichever `Ref<T>` you use to allow reading, writing, or both. If we denote a writable onepass range with WOnePassRange, we can define the
 copy algorithm like this:
 
 ```cpp
@@ -399,9 +393,9 @@ void fun(ForwardRange r)
 }
 ```
 
-The save method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all---it\'s an alias, another reference to the same underlying Range object. Copying
+The save method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all&mdash;it\'s an alias, another reference to the same underlying Range object. Copying
 the actual object requires a method call. Second, in a language with value semantics, like C++, there\'s no distinction between copying to pass an argument to a function and copying to save a snapshot of the
-range. Calling save makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct---a
+range. Calling save makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct&mdash;a
 perennial source of trouble.)
 
 Using the forward range interface, we can define a host of interesting algorithms. To get an idea of what range-based algorithms would look like, consider defining a function findAdjacent that advances through a
@@ -511,8 +505,7 @@ shows the proposed conceptual hierarchy for ranges.
 [Figure 3](javascript:popUp('/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig03.jpg'))
 The proposed Range concept hierarchy.
 
-Experience with Ranges
-----------------------
+## Experience with Ranges
 
 One very good question is this: Are ranges as defined above expressive enough to allow implementing, for example, all of STL? How about more than that? Clearly iterators, being a lower-level abstraction, can be
 used to do things ranges cannot. However, my experience suggests that the loss of expressiveness is minimal and easily outweighed by the advantages of the high-level abstraction and safety of ranges.
@@ -521,8 +514,7 @@ I didn\'t know how to prove that ranges are sufficiently expressive. All I could
 ranges. D\'s library includes all of STL\'s functionality, and after gaining courage I added quite a few extra algorithms and ranges to it.  The following summarizes my experience with ranges while doing that
 work.
 
-Optional Range Capabilities
----------------------------
+## Optional Range Capabilities
 
 The range API defined so far is surprisingly capable, allowing the implementation of many algorithms in a container-independent manner.  However, some useful primitives are conspicuously absent. For example,
 most random access ranges and some of the others support a notion of length. The length of a range can be computed easily for even an input range by simply walking it to exhaustion, but certain containers
@@ -530,8 +522,8 @@ naturally support constant-time length as a primitive.
 
 Interestingly, length is not restricted to a specific range category.  One might suppose that random access ranges must have a length, whereas others don\'t. However, there are random access ranges that don\'t have
 a length. Infinite ranges (such as the range of numbers modulo 10 discussed above in the section \"Random Access Ranges\") are an obvious example, but there are more subtle cases. Consider, for example, a
-circular buffer implemented atop an array. You can access the ith element in constant time---it\'s the (i % n)th element of the array.  Claiming that the length of the buffer itself is n may, however,
-surprise clients: They\'d expect that taking n steps would take them to the end of the sequence, but that doesn\'t happen. Conversely, there are even input ranges that have a length---for example, a range that yields
+circular buffer implemented atop an array. You can access the ith element in constant time&mdash;it\'s the (i % n)th element of the array.  Claiming that the length of the buffer itself is n may, however,
+surprise clients: They\'d expect that taking n steps would take them to the end of the sequence, but that doesn\'t happen. Conversely, there are even input ranges that have a length&mdash;for example, a range that yields
 100 random numbers.
 
 So length is an optional attribute. If the range can define it, it should, but it\'s never obligated to do so. A range-based algorithm may or may not require that length be defined by its range parameters.
@@ -545,8 +537,7 @@ Other, more exotic range capabilities are primitives such as lookahead or putbac
 to be returned to the range. C\'s sequential file API offers the ungetc function, which is guaranteed to work for at least one character. The primitives lookahead and putback are useful in a variety of
 applications, particularly those concerned with parsing streams.
 
-Higher-Order Ranges
--------------------
+## Higher-Order Ranges
 
 In keeping with higher-order functions that take and return other functions, a higher-order range is one that aggregates and manipulates other ranges, while itself still offering a range interface. Building
 ranges that decorate other ranges is easy, useful, and fun. In fact, higher-order ranges fulfill the promise that many saw in the early days of the STL. Back then, people thought custom iterators would solve many
@@ -554,13 +545,13 @@ problems, and consequently defined quite a few of them. The idea, however, has h
 them were possible factors.
 
 Ranges, by contrast, are very easy to define and use. The result of many algorithms are, in fact, custom ranges. Consider, for example, the classic higher-order function filter, which takes a range r plus a
-predicate, and returns a range that only offers the elements of r satisfying the predicate. The work that filter itself does is minimal---it merely constructs and returns a range type, call it Filter,
+predicate, and returns a range that only offers the elements of r satisfying the predicate. The work that filter itself does is minimal&mdash;it merely constructs and returns a range type, call it Filter,
 that does the filtration in its iteration primitives.
 
 ### **Laziness.** 
 
 Higher-order ranges offer the opportunity of doing computation lazily, in the style preferred by functional languages, instead of eagerly. Consider, for example, the STL
-algorithm set\_union that takes two sorted ranges and yields one sorted range containing the elements of both ranges, in linear time. set\_union is eager---when it returns, it has finished the
+algorithm set\_union that takes two sorted ranges and yields one sorted range containing the elements of both ranges, in linear time. set\_union is eager&mdash;when it returns, it has finished the
 job. This approach has two problems. First, you need to create (and possibly allocate memory for) the target range. This is wasteful of both memory and time if all you want to do is peek at
 each element of set\_union in turn and maybe finish the loop without inspecting all elements. Second, eager set\_union needs to read all of its input before finishing, which simply does not work
 with infinite ranges.
@@ -626,10 +617,9 @@ of Chain has no idea that iteration segues from one range to another. The capabi
 define length, all of its contained ranges must also define length. If all contained ranges offer random access *and* length, then Chain offers random access as well. In that case, accessing
 the *n*th element of a Chain is proportional to the number of ranges that the Chain iterates (which could become a complexity threat if the number of ranges is large). With Chain, quite
 interesting operations become possible. For example, sort(Chain(a, b, c)) sorts a logical array that has three physical arrays as support. Although iteration over Chain is in a sense lazy because
-it doesn\'t create a contiguous copy of the three arrays, sort itself is not lazy---after it returns, all elements of the three arrays are arranged in sorted order.
+it doesn\'t create a contiguous copy of the three arrays, sort itself is not lazy&mdash;after it returns, all elements of the three arrays are arranged in sorted order.
 
-Three-Legged Algorithms
------------------------
+## Three-Legged Algorithms
 
 Several algorithms in STL use three iterators: one for the beginning of input, one for the middle, and one for the end. For example, consider STL\'s nth\_element and rotate, with the following (stylized)
 signatures:
@@ -640,15 +630,15 @@ void rotate(FIt first, FIt mid, FIt last);
 ```
 
 where RIt is a random access iterator and FIt is a forward iterator. mid must fall somewhere between first and last. nth\_element is a useful algorithm that moves the smallest mid - first elements of the range
-toward the beginning, and makes mid point to exactly the (mid - first)-smallest element in the range. The trick is that nth\_element does not sort anything---it just finds the *n*th smallest element (hence
+toward the beginning, and makes mid point to exactly the (mid - first)-smallest element in the range. The trick is that nth\_element does not sort anything&mdash;it just finds the *n*th smallest element (hence
 its name). Sorting the range and then looking at mid would achieve the same result, but nth\_element does considerably less work than sort, important when handling large data sets. (nth\_element is used in index
 searching and nearest-neighbors algorithms.)
 
 rotate is one of my favorites but has a rather arcane name. It rearranges elements in the range (using standard math interval notation) \[first, last) such that the elements in \[mid, last) appear before the
 elements in \[first, mid). Put another way, rotate is a bring-to-front operation: The \[mid, last) portion is brought to the front of the range. Naively implemented, rotate could take a long time, but the
-algorithm is quite clever about minimizing data moves.  *
+algorithm is quite clever about minimizing data moves.
 
-*NOTE**: I happen to think that bring\_to\_front would be a much more intuitive name than rotate.
+**NOTE**: I happen to think that bring\_to\_front would be a much more intuitive name than rotate.
 
 How can such functions be translated into range lingo? This was quite a conundrum that had me thinking for quite a while, until I realized a simple fact: Three-legged algorithms conceptually do *not* take three
 iterators. They take two *ranges*, left and right! The left-hand range is \[first, mid), and the right-hand one is \[mid, last). Armed with this simple fact, I first defined and implemented nth\_element and
@@ -683,13 +673,12 @@ void rotate(R1 left, R2 right);
 
 where R1 and R2 are two *arbitrary* ranges that need not be adjacent and not even of the same category. (Adjacency does not inform the algorithms at all.) Suddenly, we have much more potent algorithms to play with. For
 example, nth\_element not only can find the *n* smallest elements in one range; it can do so in two unrelated ranges sitting in memory at different places! Even better, R2 for nth\_element does not need to be
-random access---an input range would suffice. The implementation of nth\_element can detect that and use different algorithms depending on R2\'s capability.
+random access&mdash;an input range would suffice. The implementation of nth\_element can detect that and use different algorithms depending on R2\'s capability.
 
 Using two ranges instead of three iterators not only solves the problem,
 but offers additional functionality.
 
-Weaknesses
-----------
+## Weaknesses
 
 My (and many others\') natural inclination when switching from STL iterators to ranges was to think of iterator-based designs in terms of ranges, just as I\'d think of writing programs in a new language by
 using idioms popular in languages I already knew. This approach has revealed a few iterator-based designs that can\'t be translated easily to ranges. One example is Boost MultiIndex [^11], which stores
@@ -715,21 +704,19 @@ It consumes from r until it finds value and returns what\'s left of r.  This mea
 Fortunately, this problem is easily solved by defining a new range type, Until. Until is a range that takes another range r and a value v, starts at the beginning of r, and ends just before r.front() == v (or at the
 natural end of r if v is not to be found). Lazy computation for the win!
 
-There are likely other things that iterators can do that ranges can\'t---it\'s a given. The good news is that there don\'t seem to be many, so range-based designs don\'t lose many of the tricks you can do with iterators.
+There are likely other things that iterators can do that ranges can\'t&mdash;it\'s a given. The good news is that there don\'t seem to be many, so range-based designs don\'t lose many of the tricks you can do with iterators.
 
 One weakness of ranges that is linked to the memory model of the underlying language is their propensity to invalidate when you mutate their underlying container. STL iterators obey well-specified but
 unchecked invalidation rules. Once a container is changed in a way that invalidates an iterator, using that iterator firmly steps into undefined behavior territory. Ranges inherit that problem. (As discussed in the
 section \"A Fresh Approach to Iteration,\" ranges do improve safety when compared with iterators because they never allow invalid pairs of iterators.) Without having researched the matter, I believe that adding
 more safety checks to ranges should proceed more easily than with iterators.
 
-Conclusions
------------
+## Conclusions
 
-This article describes ranges---an iteration device that combines the safety, ease of definition, and ease of use of GoF iterators on one hand, with the unparalleled expressive power of STL iterators on the
+This article describes ranges&mdash;an iteration device that combines the safety, ease of definition, and ease of use of GoF iterators on one hand, with the unparalleled expressive power of STL iterators on the
 other. Ranges offer simple definition and use, foster lazy computation without contortions, and offer interesting new opportunities.
 
-Acknowledgments
----------------
+## Acknowledgments
 
 This article has benefited from some of the most valuable reviews I\'ve ever received. Without faking modesty, I can say that at least some of the reviewers were more able than me to write this article in the first
 place, both from a technical and a literary perspective. If you didn\'t enjoy reading the article, at least you can take solace in thinking that its pre-review draft was much, much worse.

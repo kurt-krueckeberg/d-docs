@@ -134,7 +134,7 @@ The conceptual hierarchy of the five iterator categories is quite
 simple: input and output are the most primitive, and each of the more
 capable categories specializes the previous one, as shown in [Figure 1](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg).
 
-![](./images_on_iterators//media/image1.png =350x350)
+![](./images_on_iterators/media/image1.png =350x350)
 
 [Figure 1](javascript:popUp('/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig01.jpg'))
 The iterator concept hierarchy in STL.

@@ -16,7 +16,7 @@ This article provides a fresh perspective on iteration. I will discuss several t
 (originally made by Alexander Stepanov [^13]) that if you want to define general algorithms, forward iteration does not suffice. Then I will propose a new approach to iteration that builds on the strengths of
 abstractions defined by other languages and libraries. The proposed framework is sensible and expressive, yet one that is simple and obvious in hindsight.
 
-When I set out to define algorithms for D\'s standard library, I initially followed the design of the STL---C++\'s Standard Template Library. That was a relatively easy choice because the STL asked a few
+When I set out to define algorithms for D\'s standard library, I initially followed the design of the STL&mdash;C++\'s Standard Template Library. That was a relatively easy choice because the STL asked a few
 essential questions crisply and answered them saliently as well. After finishing the first iteration of my implementation, the result was rather underwhelming. The STL port to D was almost as verbose and
 difficult to use as the C++ original, despite my benefiting from hindsight and a better suited language.
 

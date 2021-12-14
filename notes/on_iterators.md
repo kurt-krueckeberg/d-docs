@@ -33,7 +33,7 @@ qsort (x:xs) = qsort (filter (< x) xs) ++ [x]
 
 Code like the above has been used up and down the tubes to demonstrate the superiority of functional languages. It\'s a functional-style quicksort written in Haskell that can be understood, at least according
 to some, without any prior exposure. First line: `qsort` of the empty list is the empty list. Second line (broken to fit in a narrow space): `qsort` for a list starting with `x` followed by some more `xs` is a concatenation
-(\'++\') of three lists: all stuff in `xs` that\'s smaller than `x` sorted, `x` itself, and all stuff in xs that\'s greater than or equal to x, again sorted. Try defining quicksort in two lines in your Blub language!
+(\'++\') of three lists: all stuff in `xs` that\'s smaller than `x` sorted, `x` itself, and all stuff in `xs` that\'s greater than or equal to `x`, again sorted. Try defining quicksort in two lines in your Blub language!
 
 As much as I like Haskell, I look at that example with a mix of admiration and indignation, same as I\'d look at an example illustrating C\'s virtues by means of a buffer overrun exploit. Both cases inspire
 awe, but I think they illustrate something bad rather than something good, and I could never bring myself to write or use that kind of trick.

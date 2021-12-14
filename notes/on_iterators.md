@@ -351,10 +351,9 @@ With input ranges, we can already define some pretty neat algorithms, such as th
 ```cpp
 OnePassRange find(OnePassRange r, T value)
 {
-
    for (; !r.empty(); r.popFront()) {
    
-   if (r.front() == value) break;
+      if (r.front() == value) break;
    }
    return r;
 }
@@ -369,7 +368,6 @@ copy algorithm like this:
 WOnePassRange copy(OnePassRange src, WOnePassRange tgt) {
 
    for (; !src.empty(); src.popFront(), tgt.popFront()) {
-
       assert(!tgt.empty());
       tgt.front() = src.front();
    }
@@ -385,7 +383,6 @@ Forward ranges are most similar to what functional languages and GoF iterators i
 
 ```d
 interface ForwardRange : OnePassRange {
-
    ForwardRange save();
 }
 ```
@@ -395,10 +392,10 @@ ForwardRange defines all of OnePassRange\'s primitives plus save, which returns 
 Why is just a regular copy not enough?
 
 ```d
-void fun(ForwardRange r) {
-
+void fun(ForwardRange r)
+{
    ForwardRange lookIMadeACopy = r;
-...
+   ...
 }
 ```
 
@@ -413,19 +410,13 @@ range until its first and second elements are equal:
 ```d
 ForwardRange findAdjacent(ForwardRange r)
 {
-
    if (!r.empty()) {
-   
       auto s = r.save();
       
       s.popFront();
       
-      for (; !s.empty();
-      
-      r.popFront(), s.popFront()) {
-      
-      if (r.front() == s.front()) break;
-      
+      for (; !s.empty(); r.popFront(), s.popFront()) {
+         if (r.front() == s.front()) break;
       }
    }
 

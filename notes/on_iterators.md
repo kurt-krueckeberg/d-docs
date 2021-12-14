@@ -241,9 +241,7 @@ ranges, you write:
 
 ```cpp
 vector<int> v;
-
 //...snip
-
 sort(v); // implicitly take the "all" range of v*
 ```
 instead of the customary:

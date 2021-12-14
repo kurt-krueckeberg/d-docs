@@ -1,14 +1,14 @@
 Welcome to D Lanugage Notes's documentation!
 ============================================
 
-* notes/vscode\_for\_d.md
-* notes/intro.md
-* notes/types.md
-* notes/unicode.md
-* notes/modules.md
-* notes/ranges.md
-* notes/arrays-and-slices.md
-* notes/assoc-arrays.md
-* notes/files.md
-* notes/regex.md
-* notes/exceptions.md
+* [VS Code for D](notes/vscode_for_d.md)
+* [Intro](notes/intro.md)
+* [Types](notes/types.md)
+* [Unicode](notes/unicode.md)
+* [Modules](notes/modules.md)
+* [Ranges](notes/ranges.md)
+* [Arrays and Slices](notes/arrays-and-slices.md)
+* [assoc-arrays](notes/assoc-arrays.md)
+* [Files](notes/files.md)
+* [Regex](notes/regex.md)
+* [Exceptions](notes/exceptions.md)

@@ -325,9 +325,8 @@ Let\'s start with input from a sequential stream, such as reading one keystroke 
 IsDone/CurrentItem/Next troika: IsDone checks for end-of-input and fills a one-element buffer held inside the range object, CurrentItem returns the buffer, and Next sets an internal flag that tells IsDone to read the
 next element when called. Let\'s define the one-pass interface and also take the opportunity to change the names of the primitives. (As you\'ll soon see, the new names scale better when we extend the interface.)
 
-```d
+```
 interface OnePassRange {
-
    bool empty();
    Ref<T> front();
    void popFront();

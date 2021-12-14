@@ -254,8 +254,8 @@ To this day, the STL is unfortunately still provincial: although revered among C
 STL continue to obsess with perfecting the obsolete \"straddle\" high-jump technique. Why? I think it\'s not impossible that the authors of those languages or APIs thumbed with puzzlement through some STL
 examples, with this result: \"This is odd... We can do this already...  This is too verbose... Look at this one, it\'s just bizarre.... Aw, forget it. Let\'s just make Find a method of Array.\"
 
-**CDJ\#++**
------------
+**CDJ#++**
+----------
 
 **CDJ#++** (already featured in the code snippet above) is the language used throughout for code examples. It is a stylized pseudo-language drawing on C++, C#, Java, and D. The intent is to keep the article
 language-independent and focus on design, not code syntax and other minute details. Languages typically accomplish similar tasks differently, so **CDJ#++** does not provide constructors or destructors,
@@ -599,7 +599,7 @@ struct Retro\<DoubleEndedRange\> {
 }
 ```
 
-I used the CDJ\#++ construct static if as an optional declaration: If the tested condition is true, then the guarded code is compiled in; otherwise, it just vanishes. The predicates hasLength and
+I used the **CDJ#++** construct static if as an optional declaration: If the tested condition is true, then the guarded code is compiled in; otherwise, it just vanishes. The predicates hasLength and
 isRandomAccess use introspection to figure out during compilation whether the original range offers length and random access, respectively. Note how DoubleEndedRange also may or may not define
 length, depending on whether r does.
 

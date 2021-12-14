@@ -91,7 +91,7 @@ interface Iterator {
 
 Many of today\'s object-oriented libraries follow this mold. Some drop the First method in favor of a more general method---called ``Clone``, for
 example---which returns another Iterator: If you want to save iteration bread crumbs as you move along, you can just create independent copies
-of the Iterator object and store them in separate variables. This is more general than just restarting iteration from the first element with ``First``.
+of the Iterator object and store them in separate variables. This is more general than just restarting iteration from the first element with `First()`.
 
 In brief, functional languages and object-oriented languages foster distinct iteration styles. The two styles have some differences, but both focus on forward iteration. Focusing on forward iteration may blind
 us to the necessity of backward or random access iteration. Going backward through a container using its GoF-style iterator is virtually impossible unless you take the hit of copying the whole thing first. And

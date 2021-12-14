@@ -299,7 +299,7 @@ For some uses, GoF-style iterators can be just as efficient as iterators, though
 However, an ArrayIterator is twice the size of an STL iterator, which can be a significant overhead if the iterator is used to refer to a single container element. (For example, consider a large array and a
 bunch of iterators referring to elements in it.) Yet in many cases, STL iterators must be used in pairs anyway, and for such cases there is no overhead at all.
 
-On the other hand, the STL has effectively demonstrated that iteration is about more than just IsDone, Next, and CurrentItem. Let\'s adopt and improve on both the STL\'s and the GoF iterator ideas to get an
+On the other hand, the STL has effectively demonstrated that iteration is about more than just `IsDone()`, `Next()`, and `CurrentItem()`. Let\'s adopt and improve on both the STL\'s and the GoF iterator ideas to get an
 efficient, flexible, simple, and highly useful iterator. Instead of building upon pointers as the fundamental abstraction, as does the STL, it\'s better to start with the GoF approach. This allows the iterator
 type to be smarter and safer without losing efficiency, at least in most use cases. The iterator categories in the STL are highly useful, so let\'s keep them. As the previous example shows, the new iterator must
 know its limits&mdash;the beginning and end of its range. Therefore, the name of this new candidate abstraction shall be \"range,\" and its refinements&mdash;input, output, forward, double-ended, and random access,

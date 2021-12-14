@@ -1,3 +1,9 @@
+# [On Iteration](https://www.informit.com/articles/printerfriendly/1407357)
+
+Date: Nov 9, 2009
+
+Andrei Alexandrescu, author of The D Programming Language, provides a fresh perspective on iteration and proposes a new approach to iteration that builds on the strengths of abstractions defined by other languages and libraries. The proposed framework is sensible and expressive, yet one that is simple and obvious in hindsight.
+
 ## Executive Summary
 
 Lisp pioneered forward iteration using singly-linked lists. Later object-oriented container designs often used the Iterator design pattern to offer sequential access using iterators. Though iterators are safe

@@ -1,12 +1,6 @@
 # Ranges in D
 
-Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerfriendly/1407357) while implementing D's generic algorithms package.
-
-> Though iterators are safe and sensible, their interface prevents definition of flexible, general, and efficient container-independent algorithms. For example, you can't reasonably expect to sort, organize as a binary heap, or even reverse a container
-> by just using its Iterator. [To provide container-independent algorithms] C++ defines its own conceptual hierarchy of iterators...  However, STL iterators are marred by lack of safety, difficulty of usage, difficulty of definition, and a very close relationship to C++
-> that limits adoption by other languages. I propose an API that combines the advantages of Iterator and STL, and I bring evidence that the proposed abstraction is sensible by implementing a superset of STL's algorithms in the D language's standard library.
-
-Resume article above [here](https://www.informit.com/articles/article.aspx?p=1407357&seqNum=7).
+Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerfriendly/1407357) while implementing D's generic algorithms package. His article is included [here](on_iterators.md).
 
 ## Iterators and Ranges: Comparing C++ to D to Rust
 

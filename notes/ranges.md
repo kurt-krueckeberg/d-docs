@@ -1,8 +1,12 @@
 # Ranges in D
 
+## Useful Resources, Articles, etc on Ranges
+
+### Andrei Alexandrescu's Original Article Introducing Ranges
+
 Andrei Alexandrescu [invented ranges](https://www.informit.com/articles/printerfriendly/1407357) while implementing D's generic algorithms package. His article is included [here](on_iterators.md).
 
-## Iterators and Ranges: Comparing C++ to D to Rust
+### Iterators and Ranges: Comparing C++ to D to Rust
 
 * [Iterators and Ranges: Comparing C++ to D to Rust - Barry Revzin](https://www.youtube.com/watch?v=d3qY4dZ2r4w)
 

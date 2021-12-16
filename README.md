@@ -1,5 +1,5 @@
-Welcome to D Lanugage Notes's documentation!
-============================================
+Notes on the D Lanugage
+=======================
 
 * [VS Code for D](notes/vscode_for_d.md)
 * [Intro](notes/intro.md)

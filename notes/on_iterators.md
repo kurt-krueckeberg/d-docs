@@ -430,7 +430,7 @@ trivially equal to `s.front()` when r and s are actually tied together.)
 
 ### Double-Ended Ranges
 
-The next step of range specialization is to define double-ended ranges, characterized by two extra methods, 'back()` and `popBack()`, corresponding to front and popFront for forward iteration:
+The next step of range specialization is to define double-ended ranges, characterized by two extra methods, `back()` and `popBack()`, corresponding to front and popFront for forward iteration:
 
 ```d
 interface DoubleEndedRange : ForwardRange {

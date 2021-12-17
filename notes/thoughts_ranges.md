@@ -1,3 +1,13 @@
+Dave Abraham showed [examples]() of very useful iterators that could not be used with STL's genetic algorithms because of a flaw in the design of stl iterators.. The stl uses function templates to implement genetic algorithms that are independent of the container type (and  of the container's uderlying type) on which they operate.
+To enable the traversal by genetric algoritms of generic containers, the stl suse the Iterator defines several conceptual iterators categories. These iterator cateogires  correspond to the traversal requirements of specific  generic algorithms. The generic binary search alorithm, for example, requires randon access traversal of a container; therefore,
+ the stl defines a random access iterator interface. The stl iterator categories are
+
+stl [iterator categories image]()
+
+But stl iterators also require you to implement a `T& operator*()` method to provide container access. Container access, though, has nothing to do with container traversal. TODO: Give the Dave Abraham examples. 
+
+The GoF Iterator Pattern is not sufficient to handle all Stl algoritthms, therefore the STL introduced iterator categories. Tesse categories,, howveer, place requirements on the return type
+of the dereference operator, something other than  traversal....
 Dave Abraham showed examples of very useful iterators that cannot not be used with STL's genetic algorithms because the stl iterators must have a `T& operator*()`, and container access  has nothing to do with the traversal requirements .
 This rules out using a lot of useful iterators like....
 

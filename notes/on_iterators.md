@@ -291,7 +291,7 @@ class ArrayIterator {
       T CurrentItem()
       {
          assert(!IsDone());
-         return \*begin;
+         return *begin;
       }
     private:
       T* begin;
@@ -424,7 +424,7 @@ ForwardRange findAdjacent(ForwardRange r)
 }
 ```
 
-After `auto s = r.save();` the ranges s and r are considered independent. If you attempt to pass a **OnePassRange** instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
+After `auto s = r.save();` the ranges s and r are considered independent. If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
 ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because `r.front()` is
 trivially equal to `s.front()` when r and s are actually tied together.)
 

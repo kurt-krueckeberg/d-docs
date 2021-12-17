@@ -402,7 +402,7 @@ void fun(ForwardRange r)
 The `save()` method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all&mdash;it\'s an alias, another reference to the same underlying Range object. Copying
 the actual object requires a method call. Second, in a language with value semantics, like C++, there\'s no distinction between copying to pass an argument to a function and copying to save a snapshot of the
 range. Calling `save()` makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct&mdash;a
-perennial source of trouble.)
+perennial source of trouble.) <-- TODO: Elaborate on what he is talking about with an example.
 
 Using the forward range interface, we can define a host of interesting algorithms. To get an idea of what range-based algorithms would look like, consider defining a function findAdjacent that advances through a
 range until its first and second elements are equal:
@@ -424,13 +424,13 @@ ForwardRange findAdjacent(ForwardRange r)
 }
 ```
 
-After `auto s = r.save();` the ranges s and r are considered independent. If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
-ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because `r.front()` is
+After `auto s = r.save();` the ranges `s` and `r` are considered independent. If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a `save()` method. If
+ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime. (For the curious: It would stop at the first step, because `r.front()` is
 trivially equal to `s.front()` when r and s are actually tied together.)
 
 ### Double-Ended Ranges
 
-The next step of range specialization is to define double-ended ranges, characterized by two extra methods, `back()` and `popBack()`, corresponding to front and popFront for forward iteration:
+The next step of range specialization is to define double-ended ranges, characterized by two extra methods, `back()` and `popBack()`, corresponding to `front()` and `popFront()` for forward iteration:
 
 ```d
 interface DoubleEndedRange : ForwardRange {
@@ -496,7 +496,7 @@ interface RandomAccessRange : ForwardRange {
 }
 ```
 
-A startling detail is that RandomAccessRange extends ForwardRange, not DoubleEndedRange. What\'s happening? Infiniteness, that\'s what happens.  Consider a simple range that yields numbers modulo 10: 0, 1, 2, ..., 9,
+A startling detail is that RandomAccessRange extends ForwardRange, not DoubleEndedRange. What\'s happening? Infiniteness, that\'s what happens. Consider a simple range that yields numbers modulo 10: 0, 1, 2, ..., 9,
 0, 1, .... Given an index, it\'s easy to compute the corresponding series element, so the range is rightfully a RandomAccessRange. But this range does not have a \"last\" element, so it cannot define
 DoubleEndedRange\'s primitives. So a random access range extends different concepts, depending on its finiteness.
 
@@ -568,38 +568,35 @@ evaluation wherever possible, to great effect.
 
 ### **Preserving Range Categories.**
 
-Recall Retro, a range that traverses a given range backwards. Clearly the original range, call it r, must offer double-ended iteration. Question: If the
+Recall Retro, a range that traverses a given range backwards. Clearly the original range, call it `r`, must offer double-ended iteration. Question: If the
 original range offered random access, should Retro also offer random access? The answer is a resounding yes. As a rule, a higher-order range must offer the highest capability that it can,
 subject to what the original range can offer. So Retro should do something like this:
 
 ```d
 struct Retro<DoubleEndedRange> {
 
-... as before ...
+   //... as before ...
 
-   static if (isRandomAccess(DoubleEndedRange)
-          && hasLength(DoubleEndedRange)) {
+   static if (isRandomAccess(DoubleEndedRange) && hasLength(DoubleEndedRange)) {
 
       Ref<T> at(unsigned i) {
   
       return r.at(r.length() - 1 - i);
    }
 
-   DoubleEndedRange slice(int i, int j) {
+   DoubleEndedRange slice(int i, int j)
+   {
 
-      return r.slice(r.length() - j,
-  
-      r.length() - i);
+      return r.slice(r.length() - j, r.length() - i);
   
       }
    }
 
-   static if (hasLength(DoubleEndedRange)) {
-
-      unsigned length() {
-  
-      return r.length();
-  
+   static if (hasLength(DoubleEndedRange))
+   {
+      unsigned length()
+      {
+        return r.length();
       }
    }
 }
@@ -655,8 +652,7 @@ void nth_element(RR left, RR right);
 void rotate(FR left, FR right);
 ```
 
-where RR is a random access range and FR is a forward range. If you want
-to call the functions for a given range, you just say, for example:
+where RR is a random access range and FR is a forward range. If you want to call the functions for a given range, you just say, for example:
 
 ```d
 Range r = ...;

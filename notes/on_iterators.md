@@ -484,7 +484,7 @@ struct Retro<DoubleEndedRange> {
 ### Random Access Ranges
 
 The most powerful range of all, the random access range, adds constant-time indexed access in addition to the single-ended range primitives. This category of range notably covers contiguous arrays but
-also noncontiguous structures such as STL\'s deque. The random access interface offers all of ForwardRange\'s primitives, plus two random access primitives, `at(int )` and `slice(int i, int j)`. `at(int)` fetches an element given the index,
+also noncontiguous structures such as STL\'s deque. The random access interface offers all of ForwardRange\'s primitives, plus two random access primitives, `at(int)` and `slice(int i, int j)`. `at(int)` fetches an element given the index,
 and `slice(int, int)` produces a subrange lying between two indices.
 
 ```d

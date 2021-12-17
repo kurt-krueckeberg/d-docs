@@ -399,9 +399,9 @@ void fun(ForwardRange r)
 }
 ```
 
-The save method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all&mdash;it\'s an alias, another reference to the same underlying Range object. Copying
+The `save()` method serves two purposes. First, in a language with reference semantics (such as Java), lookIMadeACopy is not a copy at all&mdash;it\'s an alias, another reference to the same underlying Range object. Copying
 the actual object requires a method call. Second, in a language with value semantics, like C++, there\'s no distinction between copying to pass an argument to a function and copying to save a snapshot of the
-range. Calling save makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct&mdash;a
+range. Calling `save()` makes that syntactically obvious. (This solves a problem that plagues the STL\'s forward and input iterators, which are syntactically indistinguishable while semantically distinct&mdash;a
 perennial source of trouble.)
 
 Using the forward range interface, we can define a host of interesting algorithms. To get an idea of what range-based algorithms would look like, consider defining a function findAdjacent that advances through a
@@ -424,13 +424,13 @@ ForwardRange findAdjacent(ForwardRange r)
 }
 ```
 
-After auto s = r.save(); the ranges s and r are considered independent.  If you attempt to pass a OnePassRange instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
-ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because r.front() is
-trivially equal to s.front() when r and s are actually tied together.)
+After `auto s = r.save();` the ranges s and r are considered independent. If you attempt to pass a **OnePassRange** instead of a ForwardRange, the code would not work because OnePassRanges don\'t have a save method. If
+ForwardRange just used copying instead of save, then the code would compile with a OnePassRange, but would produce wrong results at runtime.  (For the curious: It would stop at the first step, because `r.front()` is
+trivially equal to `s.front()` when r and s are actually tied together.)
 
 ### Double-Ended Ranges
 
-The next step of range specialization is to define double-ended ranges, characterized by two extra methods, back and popBack, corresponding to front and popFront for forward iteration:
+The next step of range specialization is to define double-ended ranges, characterized by two extra methods, 'back()` and `popBack()`, corresponding to front and popFront for forward iteration:
 
 ```d
 interface DoubleEndedRange : ForwardRange {
@@ -484,8 +484,8 @@ struct Retro<DoubleEndedRange> {
 ### Random Access Ranges
 
 The most powerful range of all, the random access range, adds constant-time indexed access in addition to the single-ended range primitives. This category of range notably covers contiguous arrays but
-also noncontiguous structures such as STL\'s deque. The random access interface offers all of ForwardRange\'s primitives, plus two random access primitives, at and slice. at fetches an element given the index,
-and slice produces a subrange lying between two indices.
+also noncontiguous structures such as STL\'s deque. The random access interface offers all of ForwardRange\'s primitives, plus two random access primitives, `at(int )` and `slice(int i, int j)`. `at(int)` fetches an element given the index,
+and `slice(int, int)` produces a subrange lying between two indices.
 
 ```d
 interface RandomAccessRange : ForwardRange {
@@ -545,14 +545,14 @@ applications, particularly those concerned with parsing streams.
 
 ## Higher-Order Ranges
 
-In keeping with higher-order functions that take and return other functions, a higher-order range is one that aggregates and manipulates other ranges, while itself still offering a range interface. Building
+In keeping with higher-order functions that take and return other functions, a higher-order range is **one that aggregates and manipulates other ranges, while itself still offering a range interface.** Building
 ranges that decorate other ranges is easy, useful, and fun. In fact, higher-order ranges fulfill the promise that many saw in the early days of the STL. Back then, people thought custom iterators would solve many
 problems, and consequently defined quite a few of them. The idea, however, has had limited success. I\'m not sure why, but I hypothesize that the difficulties of defining iterators and the verboseness of using
 them were possible factors.
 
-Ranges, by contrast, are very easy to define and use. The result of many algorithms are, in fact, custom ranges. Consider, for example, the classic higher-order function filter, which takes a range r plus a
+Ranges, by contrast, are very easy to define and use. The result of many algorithms are, in fact, custom ranges. Consider, for example, the classic higher-order function `filter`, which takes a range `r` plus a
 predicate, and returns a range that only offers the elements of r satisfying the predicate. The work that filter itself does is minimal&mdash;it merely constructs and returns a range type, call it Filter,
-that does the filtration in its iteration primitives.
+that does the filtering in its iteration primitives.
 
 ### **Laziness.** 
 
@@ -616,7 +616,7 @@ there should be no problem to use dynamic reflection to allow clients to discove
 If static introspection is available, a host of really cool stuff can be done. For example, if Retro is composed with itself (e.g., Retro\<Retro\<SomeRange\>\>), why do all the busywork? The entire
 construct should statically boil down to SomeRange at exactly zero computational cost.
 
-###  Chain
+### Chain
 
 One particularly interesting higher-order range is Chain, which takes two or more ranges, possibly of different categories, and offers a logically contiguous view of those ranges. Then, Chain can be used whenever one single range is expected; the user
 of Chain has no idea that iteration segues from one range to another. The capabilities of Chain are naturally the intersection of all capabilities of its inputs. For example, for Chain to
@@ -705,9 +705,9 @@ Ranges lack such capabilities. The range-based find has this signature:
 Range find(Range r, E value)
 ```
 
-It consumes from r until it finds value and returns what\'s left of r.  This means that you get access to the portion after the found value, but not before.
+It consumes from `r` until it finds value and returns what\'s left of `r`.  This means that you get access to the portion after the found value, but not before.
 
-Fortunately, this problem is easily solved by defining a new range type, Until. Until is a range that takes another range r and a value v, starts at the beginning of r, and ends just before r.front() == v (or at the
+Fortunately, this problem is easily solved by defining a new range type, `Until`. `Until` is a range that takes another range `r` and a value `v`, starts at the beginning of `r`, and ends just before `r.front() == v` (or at the
 natural end of r if v is not to be found). Lazy computation for the win!
 
 There are likely other things that iterators can do that ranges can\'t&mdash;it\'s a given. The good news is that there don\'t seem to be many, so range-based designs don\'t lose many of the tricks you can do with iterators.

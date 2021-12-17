@@ -280,7 +280,7 @@ class ArrayIterator {
    public:
       bool IsDone()
       {
-         assert(begin \<= end);
+         assert(begin <= end);
          return begin == end;
       }
       void Next()
@@ -325,7 +325,7 @@ Let\'s start with input from a sequential stream, such as reading one keystroke 
 IsDone/CurrentItem/Next troika: IsDone checks for end-of-input and fills a one-element buffer held inside the range object, CurrentItem returns the buffer, and Next sets an internal flag that tells IsDone to read the
 next element when called. Let\'s define the one-pass interface and also take the opportunity to change the names of the primitives. (As you\'ll soon see, the new names scale better when we extend the interface.)
 
-```
+```d
 interface OnePassRange {
    bool empty();
    Ref<T> front();
@@ -338,7 +338,7 @@ popFront then it\'s an input range\").
 
 To use OnePassRange, you\'d write a loop along the following lines:
 
-```cpp
+```d
 OnePassRange r = ...;
 
 for (; !r.empty(); r.popFront()) {
@@ -348,7 +348,7 @@ for (; !r.empty(); r.popFront()) {
 
 With input ranges, we can already define some pretty neat algorithms, such as the functional powerhouses map and reduce. To keep things simple, let\'s take a look at the find algorithm:
 
-```cpp
+```d
 OnePassRange find(OnePassRange r, T value)
 {
    for (; !r.empty(); r.popFront()) {
@@ -364,7 +364,7 @@ find has a very simple specification&mdash;it advances the passed-in range until
 Note that one-pass ranges allow output as well as input&mdash;it\'s up to whichever `Ref<T>` you use to allow reading, writing, or both. If we denote a writable onepass range with WOnePassRange, we can define the
 copy algorithm like this:
 
-```cpp
+```d
 WOnePassRange copy(OnePassRange src, WOnePassRange tgt) {
 
    for (; !src.empty(); src.popFront(), tgt.popFront()) {
@@ -573,7 +573,7 @@ original range offered random access, should Retro also offer random access? The
 subject to what the original range can offer. So Retro should do something like this:
 
 ```d
-struct Retro\<DoubleEndedRange\> {
+struct Retro<DoubleEndedRange> {
 
 ... as before ...
 

@@ -557,9 +557,9 @@ that does the filtering in its iteration primitives.
 ### **Laziness.** 
 
 Higher-order ranges offer the opportunity of doing computation lazily, in the style preferred by functional languages, instead of eagerly. Consider, for example, the STL
-algorithm set\_union that takes two sorted ranges and yields one sorted range containing the elements of both ranges, in linear time. set\_union is eager&mdash;when it returns, it has finished the
+algorithm `set_union` that takes two sorted ranges and yields one sorted range containing the elements of both ranges, in linear time. `set_union` is eager&mdash;when it returns, it has finished the
 job. This approach has two problems. First, you need to create (and possibly allocate memory for) the target range. This is wasteful of both memory and time if all you want to do is peek at
-each element of set\_union in turn and maybe finish the loop without inspecting all elements. Second, eager set\_union needs to read all of its input before finishing, which simply does not work
+each element of `set_union` in turn and maybe finish the loop without inspecting all elements. Second, eager set\_union needs to read all of its input before finishing, which simply does not work
 with infinite ranges.
 
 A classic argument in favor of lazy evaluation is that it leads to better modular composition. This is because lazy evaluation allows for much more involved compositions, with powerful generators that construct a large data space, out of which a selector chooses the

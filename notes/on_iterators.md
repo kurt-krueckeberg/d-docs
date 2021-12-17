@@ -149,11 +149,11 @@ To access the value referenced by an STL iterator (or C++ pointer), named iter, 
 iterator, you simply assign iter to another variable. Finally, to determine when the range of values has been exhausted, you compare the iterator to an end-of-the-range iterator kept separately. Unlike the GoF iterator,
 a C++ iterator does not know when it has exhausted the range, just as a pointer traversing an array has no knowledge of the extent of the array.
 
-Bidirectional iterators also define \--iter allowing you to move one position to the left, and random access iterators define addition of an integer (e.g., iter = iter + 5), indexed access (e.g., iter[^5]), and
-distance between iterators (e.g., int to\_go = end - iter). Thanks to this setup, built-in pointers enjoyed random access iterator status&mdash;the most powerful of all&mdash;by default, without having to do
+Bidirectional iterators also define `--iter` allowing you to move one position to the left, and random access iterators define addition of an integer (e.g., `iter = iter + 5`), indexed access (e.g., `iter[5]`), and
+distance between iterators (e.g., `int to\_go = end - iter`). Thanks to this setup, built-in pointers enjoyed random access iterator status&mdash;the most powerful of all&mdash;by default, without having to do
 anything. If you were a pointer, you were born into RandomAccessIterator royalty.
 
-All of the above primitives take constant time. It would be possible to make iter += n work with a non-random iterator by evaluating ++iter n times, but that would take *O*(*n*) time, which in turn would wreak
+All of the above primitives take constant time. It would be possible to make `iter += n` work with a non-random iterator by evaluating `++iter` n times, but that would take *O*(*n*) time, which in turn would wreak
 havoc with algorithms that rely on iter += n as a constant-time primitive.
 
 STL\'s adoption of pointer-like syntax and semantics, as opposed to the traditional approach using named interface functions, was a brilliant strategic move helping rapid adoption of the library. STL algorithms
@@ -186,13 +186,13 @@ additionally in a second hierarchy of categories. These new categories are ortho
 
 In brief:
 
--   **Readable iterators:** You can write: `value = *iter`.
+-   **Readable iterators:** You can do: `value = *iter`.
 
--   **Writable iterators:** You can write: `*iter = value`.
+-   **Writable iterators:** You can do: `*iter = value`.
 
--   **Swappable iterators:** You can write: `iter_swap(iter1, iter2)`.
+-   **Swappable iterators:** You can do: `iter_swap(iter1, iter2)`.
 
--   **lvalue iterators:** You can write: `address = &(*iter);` that is,
+-   **lvalue iterators:** You can do: `address = &(*iter);` that is,
     you can take the address at which the iterated element lies in memory
 
 [Figure 2](https://www.informit.com/content/images/art_alexandrescu3_iterators/elementLinks/alexandrescu3_fig02.jpg)

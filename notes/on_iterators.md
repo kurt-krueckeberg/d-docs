@@ -150,7 +150,7 @@ iterator, you simply assign iter to another variable. Finally, to determine when
 a C++ iterator does not know when it has exhausted the range, just as a pointer traversing an array has no knowledge of the extent of the array.
 
 Bidirectional iterators also define `--iter` allowing you to move one position to the left, and random access iterators define addition of an integer (e.g., `iter = iter + 5`), indexed access (e.g., `iter[5]`), and
-distance between iterators (e.g., `int to\_go = end - iter`). Thanks to this setup, built-in pointers enjoyed random access iterator status&mdash;the most powerful of all&mdash;by default, without having to do
+distance between iterators (e.g., `int to_go = end - iter`). Thanks to this setup, built-in pointers enjoyed random access iterator status&mdash;the most powerful of all&mdash;by default, without having to do
 anything. If you were a pointer, you were born into RandomAccessIterator royalty.
 
 All of the above primitives take constant time. It would be possible to make `iter += n` work with a non-random iterator by evaluating `++iter` n times, but that would take *O*(*n*) time, which in turn would wreak
@@ -610,7 +610,7 @@ This kind of optionally enriched interface depending on the type of the input pu
 or C\#, and in C++ things can be done, albeit with difficulty. In D, the static if construct exists and makes it easy to define isRandomAccess and hasLength. If your target language is dynamic,
 there should be no problem to use dynamic reflection to allow clients to discover the capabilities of a range object.
 
-If static introspection is available, a host of really cool stuff can be done. For example, if Retro is composed with itself (e.g., Retro\<Retro\<SomeRange\>\>), why do all the busywork? The entire
+If static introspection is available, a host of really cool stuff can be done. For example, if Retro is composed with itself (e.g., `Retro<Retro<SomeRange>>`), why do all the busywork? The entire
 construct should statically boil down to SomeRange at exactly zero computational cost.
 
 ### Chain

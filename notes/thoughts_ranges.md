@@ -1,3 +1,6 @@
+
+**TODO:*: Merge exceprts from abrahams (below) into the On\_iteratos.md article.
+
 The GoF Iterator Pattern is not sufficient to handle all stl algorithms, therefore the STL introduced iterator categories. These categories, howveer, place requirements on the return type of the dereference operator.
 Dave Abraham gave examples of very useful iterators that cannot not be used with STL's genetic algorithms because the stl iterators must have a `T& operator*()`.
 This rules out using a lot of useful iterators like....

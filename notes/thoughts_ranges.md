@@ -1,16 +1,27 @@
+**TODO:*: Merge exceprts from Abrahams (below) into the On\_iteratos.md article.
 
-**TODO:*: Merge exceprts from abrahams (below) into the On\_iteratos.md article.
+The GoF Iterator Pattern is not sufficient to handle all STL algorithms; therefore the STL introduced iterator categories. These categories, however, place requirements on the return type of the dereference operator.
+Dave Abraham gave examples of very useful iterators that cannot not be used with STL's genetic algorithms because stl iterators must have a `T& operator*()`.
 
-The GoF Iterator Pattern is not sufficient to handle all stl algorithms, therefore the STL introduced iterator categories. These categories, howveer, place requirements on the return type of the dereference operator.
-Dave Abraham gave examples of very useful iterators that cannot not be used with STL's genetic algorithms because the stl iterators must have a `T& operator*()`.
+[Abrahams et al.](https://www.boost.org/doc/libs/1_40_0/libs/iterator/doc/new-iter-concepts.html)[^6] propsed change to STL iterators that separates container traversal and access into orthogonal concepts. They introduced 
+a second hierarchy of categories (to the current iterator categories). Dave Abrahams points reasons for this change:
+
+> For example, vector<bool>::iterator is almost a random access iterator, but the return type is not bool& (see issue 96 and Herb Sutter's paper J16/99-0008 = WG21 N1185). Therefore, the iterators of vector<bool> only meet the requirements of input
+> iterator and output iterator. This is so nonintuitive that the C++ standard contradicts itself on this point. In paragraph 23.2.4/1 it says that a vector is a sequence that supports random access iterators.
+
+> Another difficult-to-categorize iterator is the transform iterator, an adaptor which applies a unary function object to the dereferenced value of the some underlying iterator (see transform_iterator). For unary functions such as times, the return type
+> of `operator*` clearly needs to be the result type of the function object, **which is typically not a reference.** Because random access iterators are required to return lvalues from operator*, if you wrap int* with a transform iterator, you do not get
+> a random access iterator as might be expected, but an input iterator.
+
+
 This rules out using a lot of useful iterators like....
 
 Andrei Alex.. writes:
 
 In the STL, *iter must be a reference to T and may or may not allow updates, depending on whether T is a const type. Sometimes, changing the referenced value is not even an option, as the underlying data source may be a read-only container or even an input stream.
 
-[Abrahams et al.](https://www.boost.org/doc/libs/1_40_0/libs/iterator/doc/new-iter-concepts.html)[^6] draw on existing experience with the STL to propose an extension to it that separates traversal and access into orthogonal concepts. Their suggestion
-is to classify iterators additionally in a second hierarchy of categories. Dave Abrahams points out examples for this change:
+[Abrahams et al.](https://www.boost.org/doc/libs/1_40_0/libs/iterator/doc/new-iter-concepts.html)[^6] propsed change to STL iterators that separates container traversal and access into orthogonal concepts. They introduced 
+a second hierarchy of categories (to the current iterator categories). Dave Abrahams points reasons for this change:
 
 > For example, vector<bool>::iterator is almost a random access iterator, but the return type is not bool& (see issue 96 and Herb Sutter's paper J16/99-0008 = WG21 N1185). Therefore, the iterators of vector<bool> only meet the requirements of input
 > iterator and output iterator. This is so nonintuitive that the C++ standard contradicts itself on this point. In paragraph 23.2.4/1 it says that a vector is a sequence that supports random access iterators.

@@ -29,19 +29,33 @@ D has these familiar built-in scalar types:
 |wchar|UTF-16 code unit|0xFFFF|
 |dchar|UTF-32 code unit and Unicode code point|0x0000FFFF|
 
+## Other Built-in Types in D
+
+As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three other built-in types traditionally implemented in a standard library:
+
+- dynamic arrays
+- associateve arrays
+- strings
+
+This is in contrast to C++, for example, were dynamic arrays, associative arrays (hash tables) and strings are implemented in the C++ standard library&mdash;in the `std::vector`, `std::unordered_map` and `std::string`, repectively. 
+
 ## Properties of Types in D
 
 ### Properties of All Types
 
+All types in D have these properties:
+
 | Property|Description|
 |---------|-----------|
 |.init|initializer|
-.sizeof	size in bytes
+|.sizeof|size in bytes|
 |.alignof|alignment size|
 |.mangleof|string representing the ‘mangled’ representation of the type|
 |.stringof|string representing the source representation of the type|
 
 ### Properties for Integral Types
+
+Integral types have these properties:
 
 |Property|Description|
 |--------|----------|
@@ -50,6 +64,8 @@ D has these familiar built-in scalar types:
 |.min|minimum value|
 
 ### Properties for Floating Point Types
+
+And floating point types have these:
 
 |Property|Description|
 |--------|----------|
@@ -70,20 +86,10 @@ D has these familiar built-in scalar types:
 
 ### Properties for Class Types
 
+Classes declared in D have this property:
+
 |Property|Description|
 |--------|-----------|
 |.classinfo|Information about the dynamic type of the class|
 
-Built-in types do has the following properties:
-
-For details on implicit type promptions
-
-## Other Built-in Types
-
-As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three other built-in types traditionally implemented in a standard library:
-
-- dynamic arrays
-- associateve arrays
-- strings
-
-This is in contrast to C++, for example, were dynamic arrays, associative arrays (hash tables) and strings are implemented in the C++ standard library&mdash;in the `std::vector`, `std::unordered_map` and `std::string`, repectively. 
+For details on implicit type promptions, about, ....

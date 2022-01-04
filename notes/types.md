@@ -31,7 +31,7 @@ D has these familiar built-in scalar types:
 
 ## Other Built-in Types in D
 
-As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three other built-in types traditionally implemented in a standard library:
+As explained in [D Builtin Rationale](https://dlang.org/articles/builtin.html), D has three types traditionally implemented in a standard library, but in D they are built-in, implemented in the compiler:
 
 - dynamic arrays
 - associateve arrays

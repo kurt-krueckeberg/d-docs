@@ -19,15 +19,74 @@ D has these familiar built-in scalar types:
 |float|32-bit floating point|float.nan|
 |double|64-bit floating point|double.nan|
 |real|either the largest floating point type that the hardware supports or double, whichever is larger|real.nan|
-|ifloat|imaginary value type of float|float.nan * 1.0i|
-|idouble|imaginary value type of double|double.nan * 1.0i|
-|ireal|imaginary value type of real|real.nan * 1.0i|
-|cfloat|complex number type made of two floats|float.nan + float.nan * 1.0i|
-|cdouble|complex number type made of two doubles|double.nan + double.nan * 1.0i|
-|creal|complex number type made of two reals|real.nan + real.nan * 1.0i|
 |char|UTF-8 code unit|0xFF|
 |wchar|UTF-16 code unit|0xFFFF|
 |dchar|UTF-32 code unit and Unicode code point|0x0000FFFF|
+
+### sizeof Output
+
+This code show the number of bypes per type using the built-in `sizeof` property:
+
+<pre>
+import std.stdio;
+
+void main(string[] args)
+{
+   writefln("bool.sizeof\t= %s", bool.sizeof);
+   
+   writefln("byte.sizeof\t= %s", byte.sizeof);
+   
+   writefln("ubyte.sizeof\t= %s", ubyte.sizeof);
+   
+   writefln("short.sizeof\t= %s", short.sizeof);
+   
+   writefln("ushort.sizeof\t= %s", ushort.sizeof);
+   
+   writefln("int.sizeof\t= %s", int.sizeof);
+   
+   writefln("uint.sizeof\t= %s", uint.sizeof);
+   
+   writefln("long.sizeof\t= %s", long.sizeof);
+   
+   writefln("ulong.sizeof\t= %s", ulong.sizeof);
+   
+   writefln("float.sizeof\t= %s", float.sizeof);
+   
+   writefln("double.sizeof\t= %s", double.sizeof);
+   
+   writefln("real.sizeof\t= %s", real.sizeof);
+
+   writefln("char.sizeof\t= %s", char.sizeof);
+   
+   writefln("wchar.sizeof\t= %s", wchar.sizeof);
+   
+   writefln("dchar.sizeof\t= %s", dchar.sizeof);
+}   
+</pre>
+
+This output is:
+
+<pre>b
+ool.sizeof	= 1
+byte.sizeof	= 1
+ubyte.sizeof	= 1
+short.sizeof	= 2
+ushort.sizeof	= 2
+int.sizeof	= 4
+uint.sizeof	= 4
+long.sizeof	= 8
+ulong.sizeof	= 8
+float.sizeof	= 4
+double.sizeof	= 8
+real.sizeof	= 16
+char.sizeof	= 1
+wchar.sizeof	= 2
+dchar.sizeof	= 4
+</pre>
+
+## Complex type
+
+`std.complex.Complex` implements the complex number template class parametrised by a type T, which must be either float, double or real.
 
 ## Other Built-in Types in D
 

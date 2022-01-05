@@ -25,10 +25,9 @@ D has these familiar built-in scalar types:
 
 ### sizeof Output
 
-This code show the number of bypes per type using the built-in `sizeof` property:
+Using the built-in `sizeof` property, we can display the size in bytes of tyep type:
 
 <pre>
-
 #!/usr/bin/env rdmd
 import std.stdio;
 

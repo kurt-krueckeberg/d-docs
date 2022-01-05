@@ -28,10 +28,15 @@ D has these familiar built-in scalar types:
 This code show the number of bypes per type using the built-in `sizeof` property:
 
 <pre>
+
+#!/usr/bin/env rdmd
 import std.stdio;
 
 void main(string[] args)
 {
+   writeln("sizeof output\t  # of bytes");
+   writeln("----------------------------\n");
+
    writefln("bool.sizeof\t= %s", bool.sizeof);
    
    writefln("byte.sizeof\t= %s", byte.sizeof);
@@ -67,6 +72,9 @@ void main(string[] args)
 This output is:
 
 <pre>
+sizeof output	  # of bytes
+----------------------------
+
 bool.sizeof	= 1
 byte.sizeof	= 1
 ubyte.sizeof	= 1

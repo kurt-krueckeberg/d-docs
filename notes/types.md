@@ -66,8 +66,8 @@ void main(string[] args)
 
 This output is:
 
-<pre>b
-ool.sizeof	= 1
+<pre>
+bool.sizeof	= 1
 byte.sizeof	= 1
 ubyte.sizeof	= 1
 short.sizeof	= 2
